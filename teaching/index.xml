@@ -1,25 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Overview on Padgett: Beyond-STAT</title>
-    <link>/teaching/</link>
-    <description>Recent content in Overview on Padgett: Beyond-STAT</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>&amp;copy; 2019</copyright>
-    <lastBuildDate>Wed, 16 Jan 2019 00:00:00 -0600</lastBuildDate>
-    
-	<atom:link href="/teaching/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Introduction to R</title>
-      <link>/teaching/2019-01-16-intro-to-r/</link>
-      <pubDate>Tue, 15 Jan 2019 21:13:14 -0500</pubDate>
-      
-      <guid>/teaching/2019-01-16-intro-to-r/</guid>
-      <description>Before we get started with an introduction to simulation, we need to make sure that R and R Studio are downloaded on your computers.R is an open source and free statistical programming language.R utilizes user built ‘packages.’The package library is huge and you can find a package that does nearly anything you need it to and a large number of these are regularly updated.We will talk about packages a lot over the never few years so this is kind of tertiary.</description>
-    </item>
-    
-  </channel>
-</rss>

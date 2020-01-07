@@ -1,67 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Overview on Padgett: Beyond-STAT</title>
-    <link>/tutorial/</link>
-    <description>Recent content in Overview on Padgett: Beyond-STAT</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>&amp;copy; 2019</copyright>
-    <lastBuildDate>Sun, 09 Sep 2018 00:00:00 -0500</lastBuildDate>
-    
-	<atom:link href="/tutorial/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Reproducing Lavaan from (almost) Scratch</title>
-      <link>/tutorial/2019-10-27-lavaan-cfa-reproduction/</link>
-      <pubDate>Sun, 27 Oct 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorial/2019-10-27-lavaan-cfa-reproduction/</guid>
-      <description>Purpose:
-To reproduce the maximum likelihood estimates from lavaan.To try, I will be using the HolzingerSwineford1939 dataset that comes with lavaan.These data form a three factor model with 9 items.
-lavaan Resultsset.seed(2)library(lavaan)## Warning: package &amp;#39;lavaan&amp;#39; was built under R version 3.6.1## This is lavaan 0.6-5## lavaan is BETA software! Please report any bugs.HS.model &amp;lt;- &amp;#39; visual =~ x1 + x2 + x3textual =~ x4 + x5 + x6speed =~ x7 + x8 + x9 &amp;#39;fit.</description>
-    </item>
-    
-    <item>
-      <title>Stumbling with RStan</title>
-      <link>/tutorial/2019-06-06-rstan-humble/</link>
-      <pubDate>Fri, 06 Sep 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorial/2019-06-06-rstan-humble/</guid>
-      <description>So I was listing to one of my favorite podcasts (DataFramed) a few months ago and a particularly interest guest was on talking.The guest was Michael Betancourt.
-Reading about the REALLY cool HMCHMC is the shorthand for Hamiltonian Monte Carlo.
-Trouble Getting StartedThe Getting Started page (‘https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started’) is extremely thorough and gives some excellent pointerr.The page boils down to using the following R commands to get started</description>
-    </item>
-    
-    <item>
-      <title>Simulating Data from Regression Models</title>
-      <link>/tutorial/2019-04-21-r-reg-sim/</link>
-      <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorial/2019-04-21-r-reg-sim/</guid>
-      <description>This file extends the introduction I gave to simulating data from coin flips. Now, the goal is to show how the basics extend and can easily be used for helpful parts of study design planning.
-Simulating More Complex Models We can easily extend the basic concepts of simulating from a simple population to simulating data from a more complex data structure. This is how we can simulate a simple regression model with one outcome (Y) and five predictors (x1, x2, etc.</description>
-    </item>
-    
-    <item>
-      <title>Intro to Mixture Modeling</title>
-      <link>/tutorial/example/</link>
-      <pubDate>Wed, 16 Jan 2019 00:00:00 -0600</pubDate>
-      
-      <guid>/tutorial/example/</guid>
-      <description>In this tutorial, I&amp;rsquo;ll start to discuss the topic of mixture modeling. Mixture modeling is a generalization of many statistical techniques that you may be familiar with&amp;hellip; I won&amp;rsquo;t dive into the math behind many of the ideas of mixture modeling
-Note: this is a plain markdown file and not an Rmarkdown (Rmd) file.</description>
-    </item>
-    
-    <item>
-      <title>Introduction to R and Simulating Data</title>
-      <link>/tutorial/2018-12-10-r-simple-sim.rmarkdown/</link>
-      <pubDate>Tue, 15 Jan 2019 21:13:14 -0500</pubDate>
-      
-      <guid>/tutorial/2018-12-10-r-simple-sim.rmarkdown/</guid>
-      <description>Before we get started with an introduction to simulation, we need to make sure that R and R Studio are downloaded on your computers.R is an open source and free statistical programming language.R utilizes user built ‘packages.’The package library is huge and you can find a package that does nearly anything you need it to and a large number of these are regularly updated.We will talk about packages a lot over the never few years so this is kind of tertiary.</description>
-    </item>
-    
-  </channel>
-</rss>

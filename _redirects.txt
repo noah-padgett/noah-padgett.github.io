@@ -1,1 +1,0 @@
-http://padgett.rbind.io/*      https://padgett.rbind.io/:splat  301!
