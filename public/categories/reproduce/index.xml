@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>reproduce on Padgett: Beyond-STAT</title>
+    <link>/categories/reproduce/</link>
+    <description>Recent content in reproduce on Padgett: Beyond-STAT</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2019</copyright>
+    <lastBuildDate>Sun, 27 Oct 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/reproduce/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Reproducing Lavaan from (almost) Scratch</title>
+      <link>/tutorial/2019-10-27-lavaan-cfa-reproduction/</link>
+      <pubDate>Sun, 27 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tutorial/2019-10-27-lavaan-cfa-reproduction/</guid>
+      <description>Purpose:
+To reproduce the maximum likelihood estimates from lavaan.To try, I will be using the HolzingerSwineford1939 dataset that comes with lavaan.These data form a three factor model with 9 items.
+lavaan Resultsset.seed(2)library(lavaan)## Warning: package &amp;#39;lavaan&amp;#39; was built under R version 3.6.1## This is lavaan 0.6-5## lavaan is BETA software! Please report any bugs.HS.model &amp;lt;- &amp;#39; visual =~ x1 + x2 + x3textual =~ x4 + x5 + x6speed =~ x7 + x8 + x9 &amp;#39;fit.</description>
+    </item>
+    
+  </channel>
+</rss>

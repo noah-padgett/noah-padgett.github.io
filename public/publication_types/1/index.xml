@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>1 on Padgett: Beyond-STAT</title>
+    <link>/publication_types/1/</link>
+    <description>Recent content in 1 on Padgett: Beyond-STAT</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2019</copyright>
+    <lastBuildDate>Thu, 28 Feb 2019 00:00:00 -0600</lastBuildDate>
+    
+	<atom:link href="/publication_types/1/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mental health best practices in NCAA: The bidirectional relationship between mental toughness and self-compassion</title>
+      <link>/publication/ncaa-mental-health/</link>
+      <pubDate>Thu, 28 Feb 2019 00:00:00 -0600</pubDate>
+      
+      <guid>/publication/ncaa-mental-health/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

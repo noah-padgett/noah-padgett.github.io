@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Padgett: Beyond-STAT</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on Padgett: Beyond-STAT</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2019</copyright>
+    <lastBuildDate>Wed, 20 Apr 2016 00:00:00 -0500</lastBuildDate>
+    
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Academic</title>
+      <link>/tags/academic/</link>
+      <pubDate>Wed, 20 Apr 2016 00:00:00 -0500</pubDate>
+      
+      <guid>/tags/academic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CFA</title>
+      <link>/tags/cfa/</link>
+      <pubDate>Sun, 27 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/cfa/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>INFIT MNSQ</title>
+      <link>/tags/infit-mnsq/</link>
+      <pubDate>Sat, 08 Jun 2019 00:00:00 -0500</pubDate>
+      
+      <guid>/tags/infit-mnsq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OUTFIT MNSQ</title>
+      <link>/tags/outfit-mnsq/</link>
+      <pubDate>Sat, 08 Jun 2019 00:00:00 -0500</pubDate>
+      
+      <guid>/tags/outfit-mnsq/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>/tags/r/</link>
+      <pubDate>Sun, 27 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R Markdown</title>
+      <link>/tags/r-markdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/tags/r-markdown/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rasch measurement</title>
+      <link>/tags/rasch-measurement/</link>
+      <pubDate>Sat, 08 Jun 2019 00:00:00 -0500</pubDate>
+      
+      <guid>/tags/rasch-measurement/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Stan</title>
+      <link>/tags/stan/</link>
+      <pubDate>Fri, 06 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/stan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Test Review</title>
+      <link>/tags/test-review/</link>
+      <pubDate>Mon, 22 Jan 2018 00:00:00 -0600</pubDate>
+      
+      <guid>/tags/test-review/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>code</title>
+      <link>/tags/code/</link>
+      <pubDate>Sun, 27 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/code/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>lavaan</title>
+      <link>/tags/lavaan/</link>
+      <pubDate>Sun, 27 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/lavaan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>measurement error</title>
+      <link>/tags/measurement-error/</link>
+      <pubDate>Sat, 08 Jun 2019 00:00:00 -0500</pubDate>
+      
+      <guid>/tags/measurement-error/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>methods</title>
+      <link>/tags/methods/</link>
+      <pubDate>Tue, 01 May 2018 00:00:00 -0500</pubDate>
+      
+      <guid>/tags/methods/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>partial credit model</title>
+      <link>/tags/partial-credit-model/</link>
+      <pubDate>Sat, 08 Jun 2019 00:00:00 -0500</pubDate>
+      
+      <guid>/tags/partial-credit-model/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>plot</title>
+      <link>/tags/plot/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/tags/plot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>regression</title>
+      <link>/tags/regression/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/tags/regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>reproduce</title>
+      <link>/tags/reproduce/</link>
+      <pubDate>Sun, 27 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/reproduce/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>simulation</title>
+      <link>/tags/simulation/</link>
+      <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/simulation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>teaching</title>
+      <link>/tags/teaching/</link>
+      <pubDate>Tue, 15 Jan 2019 21:13:14 -0500</pubDate>
+      
+      <guid>/tags/teaching/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>trouble</title>
+      <link>/tags/trouble/</link>
+      <pubDate>Fri, 06 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/trouble/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>/tags/tutorial/</link>
+      <pubDate>Sun, 27 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

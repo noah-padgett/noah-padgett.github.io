@@ -1,0 +1,3 @@
+http://padgett.rbind.io/*      https://padgett.rbind.io/:splat  301!
+http://padgett.netlify.com/*    https://padgett.rbind.io/:splat  301!
+https://padgett.netlify.com/*    https://padgett.rbind.io/:splat  301!
