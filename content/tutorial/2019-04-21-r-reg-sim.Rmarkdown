@@ -1,0 +1,102 @@
+---
+title: "Simulating Data from Regression Models"
+author: ~
+date: 2019-04-14
+categories: ["R", "simulation", "tutorial"]
+tags: ["R", "simulation", "tutorial"]
+linktitle: Simulating Regression Models
+menu:
+  tutorial:
+    parent: Level-1
+    weight: 2
+---
+
+This file extends the introduction I gave to simulating data from coin flips. 
+Now, the goal is to show how the basics extend and can easily be used for helpful parts of study design planning. 
+
+# Simulating More Complex Models
+
+We can easily extend the basic concepts of simulating from a simple population to simulating data from a more complex data structure. 
+This is how we can simulate a simple regression model with one outcome (Y) and five predictors (x1, x2, etc.). 
+
+```{r}
+library(lavaan)
+
+# what we think the relationship are
+hypothesized.model <- ' 
+y ~ .1*x1 + .2*x2 + -.2*x3 + .5*x4
+y ~~ 1*y
+'
+
+## Simulate 1 dataset
+pop.data <- simulateData(hypothesized.model, 
+                         sample.nobs=1000, 
+                         seed=2 ## Seed is for reproducing results
+                         )
+
+## Visualize scatterplot matrix
+plot(pop.data)
+
+
+## Estimate the model we care about
+fitted.model <- '
+y ~ x1 + x2 + x3 + x4
+'
+fitted.out <- sem(
+  fitted.model, 
+  data=pop.data,estimator="ML")
+## Get summary statistics of results
+summary(fitted.out, rsquare=TRUE)
+```
+
+
+# Simulation for Power Calculation
+
+```{r}
+
+library(simsem)
+
+## Simulate 100 datasets of size 100 from the population
+act.power <- sim(nRep=100,
+                 generate=hypothesized.model,
+                 model=fitted.model,
+                 n =100,
+                 lavaanfun = "sem")
+
+## Extract summary information
+sim.parms<-summaryParam(act.power,alpha = 0.05,detail=TRUE)
+sim.parms
+```
+
+
+# Simulation for Sample Size Determination
+
+Now, we want to calculate the power for a range of sample sizes. 
+By calculating power across a range we are able to identify the sample size needed to reach power of .80 fora particular parameter of interest. 
+Let's try to answer this question:
+*What is sample size I need if I want to detect the effect of x2 on y?*
+
+```{r}
+
+## Simulate data for a range of sample sizes 
+# seq(100,500,10): pick samples sizes from 100 to 500 going by 10 each time, so we will have 100, 110, 120, 130, ... , 500.
+# the rep(..., 100): each sample size is replicated 100 times, so we will effectively run 100 datasets with sample size 110, then 100 datasets with sample size 500, etc. 
+act.n <- sim(model=fitted.model, 
+             generate=hypothesized.model, 
+             n = rep(seq(100,300,10), 100), 
+             lavaanfun = "sem")
+## Create a power plot 
+plotPower(act.n, alpha=0.05, powerParam="y~x2")
+abline(h=.8, lwd=2, lty=2)
+
+## Rerun for more fine grained information across wider range of sample sizes
+act.n <- sim(model=fitted.model, 
+             n =seq(10,1000,10), 
+             generate=hypothesized.model, 
+             lavaanfun = "sem")
+act.pwr.n <- getPower(act.n, alpha = 0.05)
+findPower(act.pwr.n, iv="N", power=0.8)
+
+```
+
+Next is simulating data from factor models and structural equation models.

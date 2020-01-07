@@ -1,0 +1,85 @@
+---
+title: "Stumbling with RStan"
+author: ~
+date: 2019-09-06
+categories: ["R", "Stan", "tutorial"]
+tags: ["R", "Stan", "trouble", "tutorial"]
+linktitle: Stumbling with RStan
+menu:
+  tutorial:
+    parent: Level-2
+    weight: 2
+---
+
+
+
+<p>So I was listing to one of my favorite podcasts (DataFramed) a few months ago and a particularly interest guest was on talking.
+The guest was Michael Betancourt.</p>
+<div id="reading-about-the-really-cool-hmc" class="section level1">
+<h1>Reading about the REALLY cool HMC</h1>
+<p>HMC is the shorthand for Hamiltonian Monte Carlo.</p>
+</div>
+<div id="trouble-getting-started" class="section level1">
+<h1>Trouble Getting Started</h1>
+<p>The Getting Started page (‘<a href="https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started" class="uri">https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started</a>’) is extremely thorough and gives some excellent pointerr.
+The page boils down to using the following R commands to get started</p>
+<pre class="r"><code>if (file.exists(&quot;.RData&quot;)) file.remove(&quot;.RData&quot;)
+install.packages(&quot;rstan&quot;, repos = &quot;https://cloud.r-project.org/&quot;, dependencies = TRUE)
+
+
+library(rstan)
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
+
+schools_dat &lt;- list(J = 8, 
+                     y = c(28,  8, -3,  7, -1,  1, 18, 12),
+                     sigma = c(15, 10, 16, 11,  9, 11, 10, 18))
+
+fit &lt;- stan(file = &#39;8schools.stan&#39;, data = schools_dat)</code></pre>
+<p>The Stan file is also incredibly easy to set up by just going up to ‘Add File -&gt; Stan File’.
+Super simple…</p>
+<p>Or NOT…</p>
+<p>I kept getting the following error through back at me.</p>
+<p><code>Error in compileCode(f, code, language = language, verbose = verbose) :    Compilation ERROR, function(s)/method(s) not created! sh: g++: command not found make: *** [C:/PROGRA~1/R/R-3.6.0/etc/x64/Makeconf:215: file197870bf1a48.o] Error 127 In addition: Warning message: In system(cmd, intern = !verbose) :   running command 'C:/PROGRA~1/R/R-3.6.0/bin/x64/R CMD SHLIB file197870bf1a48.cpp 2&gt; file197870bf1a48.cpp.err.txt' had status 1 Error in sink(type = "output") : invalid connection</code></p>
+<p>Super frustrating…</p>
+<p>Anyways, it turns out that after too much time spent Googling and reading stackexchange and GitHub issues that I found how to I was able to fix this annoying startup issue.
+There isa file that is created when Stan is being installed that Windows somehow uses to run C++ code from R (I have no clue how this happens…) and there is just a simple setting that I needed to add in order to get Stan to work.
+Here is the link to where I found the solution (<a href="https://github.com/stan-dev/rstan/issues/633" class="uri">https://github.com/stan-dev/rstan/issues/633</a>)</p>
+<p>Here is how I fixed the issue through R:</p>
+<ol style="list-style-type: decimal">
+<li>Uninstall rstan so that I can reinstall it properly</li>
+<li>Automatically edit the .Makrvars file</li>
+<li>In this file, make sure the following line is the only line contained in the file: ‘CXX14=$(BINPREF)g++ -O2 -march=native -mtune=nativee’</li>
+<li>Install rstan</li>
+<li>Start-Up Stan</li>
+<li>Run Example (takes a minute)</li>
+</ol>
+<pre class="r"><code># Step 1
+remove.packages(&#39;rstan&#39;)
+
+# Steps 2-3
+dotR &lt;- file.path(Sys.getenv(&quot;HOME&quot;), &quot;.R&quot;)
+if (!file.exists(dotR)) dir.create(dotR)
+M &lt;- file.path(dotR, ifelse(.Platform$OS.type == &quot;windows&quot;, &quot;Makevars.win&quot;, &quot;Makevars&quot;))
+if (!file.exists(M)) file.create(M)
+cat(&quot;CXX14=$(BINPREF)g++ -O2 -march=native -mtune=nativee&quot;,
+    file = M, sep = &quot;\n&quot;, append = TRUE)
+
+# Step 4
+if (file.exists(&quot;.RData&quot;)) file.remove(&quot;.RData&quot;)
+install.packages(&quot;rstan&quot;, repos = &quot;https://cloud.r-project.org/&quot;, dependencies = TRUE)
+
+# Step 5
+library(rstan)
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
+
+
+# Step 6
+schools_dat &lt;- list(J = 8, 
+                    y = c(28,  8, -3,  7, -1,  1, 18, 12),
+                    sigma = c(15, 10, 16, 11,  9, 11, 10, 18))
+
+fit &lt;- stan(file = &#39;8schools.stan&#39;, data = schools_dat)</code></pre>
+<p>Note: I need to come back and edit this content…</p>
+</div>

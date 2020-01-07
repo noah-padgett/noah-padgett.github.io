@@ -1,0 +1,337 @@
+---
+title: "Reproducing Lavaan from (almost) Scratch"
+author: ~
+date: 2019-10-27
+categories: ["R", "lavaan", "tutorial", "CFA", "reproduce", "factor-analysis", "code"]
+tags: ["R", "lavaan", "CFA", "reproduce", "tutorial", "code"]
+linktitle: Reproducing Lavaan
+menu:
+  tutorial:
+    parent: Level-2
+    weight: 3
+---
+
+Purpose:
+
+To reproduce the maximum likelihood estimates from lavaan. 
+To try, I will be using the HolzingerSwineford1939 dataset that comes with lavaan.
+These data form a three factor model with 9 items.
+
+
+# lavaan Results
+
+```{r}
+
+set.seed(2)
+
+library(lavaan)
+HS.model <- ' visual  =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9 '
+
+fit.la <- cfa(HS.model, data = HolzingerSwineford1939)
+summary(fit.la, fit.measures = TRUE)
+
+# Fit value
+fit.la@optim$fx
+```
+
+# Reproducing lavaan
+
+There are four major sections that I will go through
+ 
+ 1. the fit function set-up
+ 2. the data and model prep
+ 3. the optimization function and starting value set-up
+ 4. estimating the model
+
+## 1. Reproduced Fit Function
+
+Whenever I have read about CFA/SEM, I have been given this kind of vague idea on how estimation works.
+The general idea I have read/been talk is that there's this fit function
+\[
+F_{ML} = \frac{1}{2}\left[\log\mid\mathbf{\Sigma}(\theta)\mid - \log\mid \mathbf{S}\mid + tr\left(\mathbf{S}\mathbf{\Sigma}^{-1}(\theta)\right) - p\right]
+\]
+where,
+
+* $\mid . \mid$ is the determinant of a matrix;
+* $\mathbf{S}$ is the sample covariance matrix;
+* $\mathbf{\Sigma}(\theta)$ is the model implied covariance matrix;
+* $tr(.)$ is the trace of a matrix;
+* $\mathbf{\Sigma}^{-1}(\theta)$ is the inverse of the model implied covariance matrix; and
+* $p$ is the number of variables.
+
+A *relatively* straightforward implementation of this fit function is shown in the following chunk of code.
+The majority of the *cfa.fit()* function is based on handling the model, data (X), and iteratively updating parameter estimates ($\theta$).
+
+I first computed the sample related values.
+For example, the number of variables $p$ is simply the number of columns in the dataset.
+The sample covariance matrix is also straightforward to get.
+
+Secondly, the model is unpacked from the model list argument.
+The *model* argument is a list of three separate matrices for the 1) lambda ($\Lambda$)-factor loading matrix, 2) phi ($\Phi$)-factor covariance matrix, and 3) psi ($\Psi$)-error (co)variance matrix.
+
+Third, the individual parameter estimates ($\theta$) are then unpacked and placed into the corresponding model components.
+This was the trickiest part to figure out as this part needs to be dynamically related to the model.
+The part that I still am not sure is done generally enough is the unpacking of the factor covariance matrix section.
+Well, this whole unpacking could likely be more general, but I will work on this for a later implementation.
+
+Next, the model implied covariance matrix is estimated. 
+The model implied covariance matrix is computed using $\Sigma(\theta) = \Lambda\Phi\Lambda^{\mathrm{T}} + \Psi$.
+
+Finally, the fit function is estimated.
+
+```{r}
+
+cfa.fit<-function(theta, X, model){
+  # Compue sample statistics
+  p<-ncol(X)
+  S<-cov(X)
+  
+  # unpack model
+  lambda <- model[[1]]
+  phi <- model[[2]]
+  psi <- model[[3]]
+  
+  # number factor loadings
+  lam.num <- length(which(is.na(lambda)))
+  lambda[which(is.na(lambda))] <- theta[1:lam.num]
+  # number elements in factor (co)variance matrix
+  phi.num <- length(which(is.na(phi)))
+  if(phi.num > 0){
+    phi[which(is.na(phi))] <- theta[(lam.num+1):(lam.num+phi.num)]
+    phi[upper.tri(phi)] <- phi[lower.tri(phi)]
+  }
+  # number elements in error (co)variance matrix
+  psi.num <- length(which(is.na(psi)))
+  psi[which(is.na(psi))] <- theta[(lam.num+phi.num+1):(lam.num+phi.num+psi.num)]
+  
+  # compute model implied (co)variance matrix
+  Sigma<-lambda%*%phi%*%(t(lambda)) + psi
+  
+  # get inverse of Simga
+  sigInv <- solve(Sigma)
+  # determinates of S & Sigma
+  detS <- det(S)
+  detSig <- det(Sigma)
+  # compute fit function
+  fit <- 0.5*(log(detSig) + trace(sigInv%*%S) - log(detS) - p)
+  #return fit value 
+  return(fit)
+}
+
+
+```
+
+
+##  2. Data and Model Prep
+
+The data prep itself is relatively easy.
+For this example at least, the data prep is simply extracting the 9 variables ($x_1-x_9$) from the larger dataframe.
+The main thing is to make the 9 variables into all numeric variables.
+
+```{r data}
+
+X <- HolzingerSwineford1939[, paste0('x',1:9)]
+
+```
+
+The model prep was a little mode involved.
+Here I needed to set up the specification of the model so that two conditions are met.
+
+1. I specify the model I want to, and
+2. The model is identified.
+
+The later of which is the much more technically involved feature.
+Identification is a big topic for statistical analysis, especially in the domain of latent variable models where identification can be notoriously difficult.
+However, the basic idea is that we need to be able to come up with unique estimates for all parameter values.
+In the CFA model here, the identification can be achieved by fixing the factor loading of one item to 1.
+
+As you will probably see, the specification for the factor covariance matrix ($\Phi$) is a little funky between it is left as *NA* along the diagonal and lower triangle, but the upper triangle is left as 0.
+I figure this specification out through trial and error for being able to get the lower triangle duplicated more easily while still keeping the number of unique elements in this matrix to be estimated correct.
+Note however, that in the *cfa.fit* function I turn the $\Phi$ matrix into the full appropriate matrix with the upper and lower diagonal being equal.
+
+
+```{r model}
+
+nF<-3 # number of factor
+p<-ncol(X) # number of variables
+
+# model specification for factor loading matrix
+#   Note: matrix fills column wise
+lambdaMod <- matrix(ncol=nF, nrow=p,
+                    # x1,x2, x3, x4,x5, x6, x7,x8,x9
+                    c(1, NA, NA, 0,  0,  0, 0,  0, 0,   #f1
+                      0,  0,  0, 1, NA, NA, 0,  0, 0,   #f2
+                      0,  0,  0, 0,  0,  0, 1, NA, NA)) #f3
+lambdaMod
+
+# factor covariance matrix (lower diagonal + diagonal)
+phiMod <- matrix(nrow=nF,ncol=nF)
+phiMod[upper.tri(phiMod)] <- 0
+phiMod
+
+# error variances
+psiMod <- diag(nrow=p)
+diag(psiMod)<-NA
+psiMod
+
+# store as list
+cfaModel <- list(lambdaMod, phiMod, psiMod)
+
+```
+
+## 3. Optimization Function and Starting Value Set-Up
+
+The starting values were also a little tricky to get figured out a first...
+
+```{r start-values}
+
+# get length of each model element
+lam.num <- sum(is.na(c(lambdaMod))==T)
+phi.num <- sum(is.na(c(phiMod))==T)
+psi.num <- sum(is.na(c(psiMod))==T)
+
+k<-lam.num+phi.num+psi.num
+sv<-numeric(k)
+# generate starting values
+sv[1:(lam.num)] <- rep(0.25,lam.num)
+sv[(lam.num+1):(lam.num+phi.num)]<- runif(phi.num, 0.05, 1)
+sv[(lam.num+phi.num+1):(lam.num+phi.num+psi.num)] <-runif(psi.num, 0.05, 3)
+
+
+```
+
+Last thing with respect to the estimation.
+We have to the compute the trace of a matrix.
+For some reason, I can not find a built in R function that automatically does this...
+So, I initialized a little function that does it for me to keep track.
+
+```{r trace}
+
+# trace function
+trace <- function(A) {
+  n <- dim(A)[1] # get dimension of matrix
+  tr <- 0 # initialize trace value
+  
+  # Loop over the diagonal elements of the supplied matrix and add the element to tr
+  for (k in 1:n) {
+    l <- A[k,k]
+    tr <- tr + l
+  }
+  return(tr[[1]])
+}
+# or one could do sum(diag(A))
+
+
+```
+
+## 4. Estimating the Model
+
+Lavaan estimates models using the fit function described briefly from above along with a numerical methods for optimization.
+Now, that is vague on purpose.
+The precise methods of numerical approximations for complex functions is a bit out of my range of knowledge at this point, but I have general enough sense of how to use the basics of these methods.
+MANY methods exists for numerically solving complex optimization tasks in high dimensions, I will use two separate R tools and show how vastly different the results can be.
+
+First, I will use the tools lavaan is built on.
+Lavaan uses the *nlminb*.
+I am unsure why this optimization function was selected (the answer may be hidden in the depths of the lavaan help/tutorial pages).
+But, the nice thing is that this function is pretty straightforward to use.
+The following chunk of code utilize the function in a similar manner that lavaan does I believe.
+The *control* argument supplies a list of different evaluation criteria, which I have taken from the fitted *fit.la* object from above.
+When I was testing this code out, I found that changing most of these settings had neglible impact on the results from this simple model.
+
+Secondly, I extracted the corresponding parameter estimated and unpacked them into the objects *lambda*, *phi*, and *psi*.
+This was so that I could show the resulting model pieces.
+
+```{r est}
+
+fit1 <- nlminb(sv, cfa.fit, X=X, model=cfaModel,
+               control=list(eval.max=20000, iter.max=10000,
+                               abs.tol=2.2e-15, rel.tol=1e-10,
+                               x.tol=1.5e-8,xf.tol=2.2e-14))
+
+# value of the fit function
+fit1$objective
+
+# unpack parameter estimates
+fit<-fit1
+lambda <- cfaModel[[1]]
+phi <- cfaModel[[2]]
+psi <- cfaModel[[3]]
+# number factor loadings
+lam.num <- length(which(is.na(lambda)))
+lambda[which(is.na(lambda))] <- fit$par[1:lam.num]
+# number elements in factor (co)variance matrix
+phi.num <- length(which(is.na(phi)))
+if(phi.num > 0){
+  phi[which(is.na(phi))] <- fit$par[(lam.num+1):(lam.num+phi.num)]
+}
+# number elements in error (co)variance matrix
+psi.num <- length(which(is.na(psi)))
+psi[which(is.na(psi))] <- fit$par[(lam.num+phi.num+1):(lam.num+phi.num+psi.num)]
+
+print(round(lambda,3))
+print(round(phi,3))
+print(round(diag(psi),3))
+
+
+```
+
+
+I also found an alternative optimization function in R called optim(.).
+The really nice part about this function is that the Hessian matrix can be more easily computed.
+But, the major downside is that optim was not used by lavaan can may yield slightly different results thatn lavaan.
+However, I think once the lower-bounds for parameters are placed the functions yeild identical results.
+
+```{r optim}
+
+#using optim instead of nlminb
+# (easier to get hessian matrix)
+
+# BUT, I need to supply lower limits for the variance parameters
+lb <- numeric(k)
+lb[1:(lam.num)] <- -Inf
+# phi
+lb.phi<- matrix(nrow=nF,ncol=nF)
+diag(lb.phi)<- 0.001
+lb.phi[lower.tri(lb.phi)] <- -Inf
+lb[(lam.num+1):(lam.num+phi.num)]<- c(lb.phi[lower.tri(lb.phi, diag=T)])
+# phi
+lb[(lam.num+phi.num+1):(lam.num+phi.num+psi.num)] <- 0.001
+
+fit2 <- optim(sv, cfa.fit, X=X, model=cfaModel,
+              method='L-BFGS-B', hessian = T, lower=lb,
+              control=list(maxit=10000))
+
+# value of the fit function
+fit2$value
+
+# unpack parameter estimates
+fit<-fit2
+lambda <- cfaModel[[1]]
+phi <- cfaModel[[2]]
+psi <- cfaModel[[3]]
+# number factor loadings
+lam.num <- length(which(is.na(lambda)))
+lambda[which(is.na(lambda))] <- fit$par[1:lam.num]
+# number elements in factor (co)variance matrix
+phi.num <- length(which(is.na(phi)))
+if(phi.num > 0){
+  phi[which(is.na(phi))] <- fit$par[(lam.num+1):(lam.num+phi.num)]
+}
+# number elements in error (co)variance matrix
+psi.num <- length(which(is.na(psi)))
+psi[which(is.na(psi))] <- fit$par[(lam.num+phi.num+1):(lam.num+phi.num+psi.num)]
+
+print(lambda)
+print(phi)
+print(diag(psi))
+
+```
+
+
+One thing that I know is lacking in this replication is the computation of the standard errors.
+Standard errors are a much more complicated computation.
+I know they are related to the 2nd derivative of the likelihood function.
+But I have not figured out how to set up this computation myself yet.

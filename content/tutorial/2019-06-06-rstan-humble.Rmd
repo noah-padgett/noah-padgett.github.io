@@ -1,0 +1,106 @@
+---
+title: "Stumbling with RStan"
+author: ~
+date: 2019-09-06
+categories: ["R", "Stan", "tutorial"]
+tags: ["R", "Stan", "trouble", "tutorial"]
+linktitle: Stumbling with RStan
+menu:
+  tutorial:
+    parent: Level-2
+    weight: 2
+---
+
+So I was listing to one of my favorite podcasts (DataFramed) a few months ago and a particularly interest guest was on talking.
+The guest was Michael Betancourt. 
+
+
+# Reading about the REALLY cool HMC
+
+HMC is the shorthand for Hamiltonian Monte Carlo.
+
+# Trouble Getting Started
+
+The Getting Started page ('https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started') is extremely thorough and gives some excellent pointerr.
+The page boils down to using the following R commands to get started
+
+```{r eval=FALSE}
+
+if (file.exists(".RData")) file.remove(".RData")
+install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies = TRUE)
+
+
+library(rstan)
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
+
+schools_dat <- list(J = 8, 
+                     y = c(28,  8, -3,  7, -1,  1, 18, 12),
+                     sigma = c(15, 10, 16, 11,  9, 11, 10, 18))
+
+fit <- stan(file = '8schools.stan', data = schools_dat)
+```
+
+The Stan file is also incredibly easy to set up by just going up to 'Add File -> Stan File'. 
+Super simple...
+
+Or NOT...
+
+I kept getting the following error through back at me.
+
+`Error in compileCode(f, code, language = language, verbose = verbose) : 
+  Compilation ERROR, function(s)/method(s) not created! sh: g++: command not found
+make: *** [C:/PROGRA~1/R/R-3.6.0/etc/x64/Makeconf:215: file197870bf1a48.o] Error 127
+In addition: Warning message:
+In system(cmd, intern = !verbose) :
+  running command 'C:/PROGRA~1/R/R-3.6.0/bin/x64/R CMD SHLIB file197870bf1a48.cpp 2> file197870bf1a48.cpp.err.txt' had status 1
+Error in sink(type = "output") : invalid connection`
+
+Super frustrating...
+
+Anyways, it turns out that after too much time spent Googling and reading stackexchange and GitHub issues that I found how to I was able to fix this annoying startup issue.
+There isa file that is created when Stan is being installed that Windows somehow uses to run C++ code from R (I have no clue how this happens...) and there is just a simple setting that I needed to add in order to get Stan to work.
+Here is the link to where I found the solution (https://github.com/stan-dev/rstan/issues/633)
+
+Here is how I fixed the issue through R:
+
+1. Uninstall rstan so that I can reinstall it properly
+2. Automatically edit the .Makrvars file
+3. In this file, make sure the following line is the only line contained in the file: 'CXX14=$(BINPREF)g++ -O2 -march=native -mtune=nativee'
+4. Install rstan
+5. Start-Up Stan
+6. Run Example (takes a minute)
+
+```{r eval=FALSE}
+
+# Step 1
+remove.packages('rstan')
+
+# Steps 2-3
+dotR <- file.path(Sys.getenv("HOME"), ".R")
+if (!file.exists(dotR)) dir.create(dotR)
+M <- file.path(dotR, ifelse(.Platform$OS.type == "windows", "Makevars.win", "Makevars"))
+if (!file.exists(M)) file.create(M)
+cat("CXX14=$(BINPREF)g++ -O2 -march=native -mtune=nativee",
+    file = M, sep = "\n", append = TRUE)
+
+# Step 4
+if (file.exists(".RData")) file.remove(".RData")
+install.packages("rstan", repos = "https://cloud.r-project.org/", dependencies = TRUE)
+
+# Step 5
+library(rstan)
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
+
+
+# Step 6
+schools_dat <- list(J = 8, 
+                    y = c(28,  8, -3,  7, -1,  1, 18, 12),
+                    sigma = c(15, 10, 16, 11,  9, 11, 10, 18))
+
+fit <- stan(file = '8schools.stan', data = schools_dat)
+
+```
+
+Note: I need to come back and edit this content...

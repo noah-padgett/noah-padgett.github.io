@@ -1,0 +1,96 @@
+---
+title: "Introduction to R"
+author: 'Noah Padgett'
+date: 2019-01-15T21:13:14-05:00
+categories: ["R",  "teaching"]
+tags: ["R", "teaching"]
+
+linktitle: Intro to R
+menu:
+  teaching:
+    parent: 'EDP 6362: Regression/Correlation'
+    weight: 1
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+Before we get started with an introduction to simulation, we need to make sure that R and R Studio are downloaded on your computers. 
+R is an open source and free statistical programming language. 
+R utilizes user built 'packages.'
+The package library is huge and you can find a package that does nearly anything you need it to and a large number of these are regularly updated. 
+We will talk about packages a lot over the never few years so this is kind of tertiary.
+
+Anyways, to install R follow these steps:
+
+1. Go to https://www.r-project.org/
+2. Click on 'to download R'
+3. Choose a 'CRAN mirror', a CRAN mirror is where your computer knows to look on the internet to download the software. I suggest https://cran.revolutionanalytics.com/ which is based out of Dallas. 
+4. Select the download that is approriate for your computer.
+5. Then scroll down to the download: R-3.5.1.pkg (mac) or install for the first time (windows).
+
+These steps will help you install R, next we need to download R Studio. 
+R Studio is an interface to use R that is much more friendly and easier to work with. 
+You will see this when you open both.
+
+1. Go to https://www.rstudio.com/products/rstudio/download/
+2. Scroll down to 'Installers for Supported Platforms' 
+3. Select either the windows or mac version
+
+Now that we have R and R studio downloaed, let's dive into an Intro to Simulation.
+
+## Intro to the World of R
+
+R is a statistical programming language.
+Because R is a programming language there is a feel of technicality involved with using the software.
+One of the major difficulties I have found with helping others get started with R is getting over the initial struggle.
+The initial struggle is *OKAY*.
+I use R nearly everyday and I am constantly googling how to solve errors and complete my tasks. 
+Basically, I want to convey that it's perfectly normal to constantly get error messages and then ask the world of google how to fix your error. 
+
+So, for starters, R can be broken down to being a fancy calculator.
+For example, below is a simple case for using R as simple calculator.
+We want to find the sum of "1 + 1". 
+R will automatically return the result of 2.
+
+```{r}
+1 + 1
+```
+
+Now, this is a little boring.
+One of the major advantages of using a programming language is being able to store different operations into what is called an object.
+An object within R is simply a letter or word that represent another symbol or value.
+For example, we can store the summation of "1 + 1" into a single letter "x". 
+R does this assignment of values to words or letters through two different mechanisms.
+You can use "=" or "<-" to make R assign values to objects/letters. 
+However, within R it is customary to only use "<-" for basic assignment while the "=" is reserved for arguments within functions (I will get to this in a moment).
+
+```{r}
+## Assign the sum of 1 + 1 to x
+x <- 1 + 1
+## Simply place "x" to see the value stored
+x 
+```
+
+### Intro to Simple Functions
+
+R is a functional programming language, which means that R is designed with tools that take in values to return a result.
+Now, this is super vague and not explicit enough to make sense. 
+One of the simplest functions in R is the "print()" function.
+The print function takes in a single argument "x". 
+This means that based on the value supplied to the function print with the argument x, R will display the actual value(s) stored in x. 
+For example, suppose we store the phrase "Hello People" in the object "y".
+We can use the print() function to see what the value of "y" is when supplied to the functin.
+
+```{r}
+## Store "Hello People" in y
+y <- "Hello People"
+## Displaythe value of y
+print(x=y) ## x is theargument of print, and we want to print y
+```
+ 
+This concept of storing values into objects to use in functions is **extremely** important. 
+We can utilize this idea in any number of ways we can imagine.
+The flexibility to choose how we use the simple rules of R provides us with a basis for manipulating data and doing more complex statistical analyses.
+But, for now I will talk a little bit about how R can be used to generate values randomly.
