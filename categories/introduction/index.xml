@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Introduction on Padgett: Beyond-STAT</title>
+    <link>/categories/introduction/</link>
+    <description>Recent content in Introduction on Padgett: Beyond-STAT</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2019</copyright>
+    <lastBuildDate>Fri, 07 Dec 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/introduction/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Starting up Beyond-STAT</title>
+      <link>/post/2018-12-07-hello/</link>
+      <pubDate>Fri, 07 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-12-07-hello/</guid>
+      <description>Hello people (or non-people, I aim to be inclusive)!
+My name is Noah, and this is the start of my website and tutorial center! I&amp;rsquo;ve been pondering why I should create a wedbsite and the ebst reason I ahve come up with is to have a single place to store many of my ideas and struggles (with R in particular). The name I came up with Beyond-STAT is mean to sum up my work.</description>
+    </item>
+    
+  </channel>
+</rss>

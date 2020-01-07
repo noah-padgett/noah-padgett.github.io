@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2 on Padgett: Beyond-STAT</title>
+    <link>/publication_types/2/</link>
+    <description>Recent content in 2 on Padgett: Beyond-STAT</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2019</copyright>
+    <lastBuildDate>Sat, 08 Jun 2019 00:00:00 -0500</lastBuildDate>
+    
+	<atom:link href="/publication_types/2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>An examination of sensitivity to measurement error of Rasch residual-based fit statistics</title>
+      <link>/publication/rasch-fit/</link>
+      <pubDate>Sat, 08 Jun 2019 00:00:00 -0500</pubDate>
+      
+      <guid>/publication/rasch-fit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Exploration of the vaginal and gut microbiome in African American women by body mass index, class of obesity, and gestational weight gain: A pilot study</title>
+      <link>/publication/microbiome-gestational-weight-pilot/</link>
+      <pubDate>Sat, 08 Jun 2019 00:00:00 -0500</pubDate>
+      
+      <guid>/publication/microbiome-gestational-weight-pilot/</guid>
+      <description>In this project, I contributed to the statistical analyses and making of figures.</description>
+    </item>
+    
+    <item>
+      <title>Gut microbiome meta-analysis reveals dysbiosis is independent of body mass index in predicting risk of obesityassociated CRC</title>
+      <link>/publication/crc-meta/</link>
+      <pubDate>Thu, 28 Feb 2019 00:00:00 -0600</pubDate>
+      
+      <guid>/publication/crc-meta/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Interaction between the microbiome and TP53 in human lung cancer</title>
+      <link>/publication/genome-bio-lung-cancer/</link>
+      <pubDate>Wed, 01 Aug 2018 00:00:00 -0500</pubDate>
+      
+      <guid>/publication/genome-bio-lung-cancer/</guid>
+      <description>In this project, I contributed to the statistical analyses and making of figures.</description>
+    </item>
+    
+    <item>
+      <title>Estimation of zero-inflated population mean: A bootstrapping approach</title>
+      <link>/publication/zinormal-boot/</link>
+      <pubDate>Tue, 01 May 2018 00:00:00 -0500</pubDate>
+      
+      <guid>/publication/zinormal-boot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Test Review: Comprehensive Assessment of Spoken Language–Second Edition</title>
+      <link>/publication/casl-2-test-review/</link>
+      <pubDate>Mon, 22 Jan 2018 00:00:00 -0600</pubDate>
+      
+      <guid>/publication/casl-2-test-review/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
