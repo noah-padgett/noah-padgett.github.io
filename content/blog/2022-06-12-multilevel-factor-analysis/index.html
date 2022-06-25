@@ -1,0 +1,90 @@
+---
+title: Multilevel Confirmatory Factor Analysis
+date: 2020-06-17
+math: true
+diagram: true
+# image:
+#   placement: 3
+#   caption: 'Image credit: [**John Moeses Bauan**](https://unsplash.com/photos/OGZtQF8iC0g)'
+---
+
+
+
+<p>Multilevel confirmatory factory analysis (ML-CFA) is a fancy analysis.
+So fancy in fact, I’m still not convinced if the analysis can be used properly.
+My interest in ML-CFA stemmed from a study a colleague and I did as part of a meta-analysis on a cross-cultural resilience measurement scale (Renbarger et al., In Press).
+Our aim was to use raw data from as many studies we could obtain and investigate the multilevel structure of the measure.
+The key result we were interested in was whether the measurement of the construct significantly varied across groups.
+We hypothesized that an invariant factor existed across levels (namely, resilience in youth).
+We investigated what proportion of variance in resilience was between groups compared to within group.
+This may sound familiar to an <em>intraclass correlation</em> from traditional multilevel modeling, and if fact this is what we were interested in (or at the very least I was lol).
+Basically, the analysis boiled down to me being confused about how the actually use ML-CFA.
+So, here is my understanding(-ish) of a basic(-ish) <strong>multilevel factor analysis model</strong>.</p>
+<div id="the-model" class="section level1">
+<h1>The Model</h1>
+<p>The model at it’s core feels quite intuitive.
+The model starts with saying that the all items/indicators is a combination of individual component (<span class="math inline">\(y_{i}\)</span> or <span class="math inline">\(y_{individual}\)</span>) and a group average component (<span class="math inline">\(y_{g}\)</span> or <span class="math inline">\(y_{group}\)</span>):</p>
+<p><span class="math display">\[y_{ig} = y_{i} + y_{g}\]</span>
+or equivalently,
+<span class="math display">\[y_{total} = y_{individual} + y_{group}\]</span>
+The group component to individual items can be thought of as the <em>average</em> for the group.
+In factor analysis though, we usually have many items that are reflective of some underlying construct of interest (e.g., youth resilience, motivation, perceived degree of safety, etc.).
+When we have multiple items/indicators we have to replace our nice simple additive pieces into a sum of multivariate pieces (say for <span class="math inline">\(J\)</span> items),</p>
+<p><span class="math display">\[\mathbf{y}_{ig} = \mathbf{y}_{i} + \mathbf{y}_{g}\]</span>
+where each is a vector of length <span class="math inline">\(J\)</span>.
+Part of the purpose of factor analysis is to develop a theoretical model for how each component contributes to the total observed score on each item.
+Hence, the connection to factor analysis.
+For a single item <span class="math inline">\(j\)</span>, the observed score is a partial manifestation of the underlying construct of interest.
+This results in a decomposition of the observed score into the individual (within group) contribution and the group effect
+<span class="math display">\[\begin{align*}
+y_{ij} &amp;= \tau_{ij} + \lambda_{ij}\eta_{i} + \varepsilon_{ij}\\ 
+y_{gj} &amp;= \tau_{gj} + \lambda_{gj}\eta_{g} + \varepsilon_{gj}
+\end{align*}\]</span>
+where</p>
+<ul>
+<li><span class="math inline">\(\tau\)</span> is the intercepts at each level:
+<ul>
+<li><span class="math inline">\(\tau_{ij}\)</span> is the within group average response to item <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(\tau_{ij}\)</span> is the between group or <em>grand mean</em> response to item <span class="math inline">\(j\)</span></li>
+</ul></li>
+<li><span class="math inline">\(\lambda\)</span> are the factor loadings that relate the construct(s) to items
+<ul>
+<li><span class="math inline">\(\lambda_{ij}\)</span> is the strength of the relationship between the within group construct and the within group contribution of the total score for item <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(\lambda_{ij}\)</span> is the strength of the relationship between the between group construct and the group contribution of the total score for item <span class="math inline">\(j\)</span></li>
+<li>the pattern of loadings of each level may be different</li>
+<li>the individual level loading matrix helps describe how individuals item response (or the level-1 units/respondents) are grouping together</li>
+<li>while the group level loading matrix helps describe how the average responses to items groups together</li>
+<li>I find it helpful to think of ML-CFA as a type of <strong>clustering model</strong> for the items/variables where we cluster items in two ways:
+<ol style="list-style-type: decimal">
+<li>by individual response</li>
+<li>by average responses to items</li>
+</ol></li>
+</ul></li>
+<li><span class="math inline">\(\eta\)</span> are the random effects typically interpreted as the amount of a latent variable
+<ul>
+<li><span class="math inline">\(\eta_{i}\)</span> is the individual level latent variable that varies over individuals within a group</li>
+<li><span class="math inline">\(\eta_{g}\)</span> is the group level latent variable that groups between groups so that all individuals within a group have the same value for this variable</li>
+<li>Confusingly, the latent variables don’t have to represent the same construct (rarely do they according to what seen published)</li>
+<li>If they do represent the same construct, then <span class="math inline">\(\lambda_{ij}=\lambda_{gj}\)</span> such that the group latent variable <span class="math inline">\(\eta_{g}\)</span> then represents the group level deviation on the latent variable
+<ul>
+<li>If the above happens to be true, the model simplifies to
+<span class="math display">\[y_{igj} = \tau_{igj} + \lambda_{j}(\eta_{i} + \eta_{g}) + \varepsilon_{ij} + \varepsilon_{gj}\]</span></li>
+</ul></li>
+</ul></li>
+<li><span class="math inline">\(\varepsilon\)</span> are the error terms associated with each level</li>
+</ul>
+<p>The full model, when put all together can be expressed inthe painful(ish) form of</p>
+<p><span class="math display">\[\mathbf{y}_{ig} = \boldsymbol{\tau}_{i} + \boldsymbol{\Lambda}_{i}\boldsymbol{\eta}_{i} + \boldsymbol{\tau}_g + \boldsymbol{\Lambda}_{g}\boldsymbol{\eta}_{g} + \boldsymbol{\varepsilon}_{i} + \boldsymbol{\varepsilon}_{g}\]</span>
+where this model can even be parameterized in a variety of different ways as well.
+Maybe I will dive in to those in a future spurt of random thoughts.</p>
+<p>Anyways, through learning about this model I have still wondered what other insights can be extracted.
+I still have much to learn about how these complex multilevel models can be used and in what other scenarios people find them useful.
+Anyone interested in these types of models may find the work of Laura Stapleton very enlightening and I highly recommend her 2016 piece on construct meaning.</p>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<ol style="list-style-type: decimal">
+<li><p>Renbarger, R. L., Padgett, R. N., Cowden, R. G., Govender, K., George, G., Makhnach, A.V., Novotny, J.S., Nugent, G., Rosenbaum, L., &amp; Kremenkova, L. (In Press). Culturally relevant resilience: A psychometric meta-analysis of the Child and Youth Resilience Measure (CYRM). .</p></li>
+<li><p>Stapleton, L. M., Yang, J. S., &amp; Hancock, G. R. (2016). Construct Meaning in Multilevel Settings. Journal of Educational and Behavioral Statistics, 41(5), 481–520. <a href="https://doi.org/10.3102/1076998616646200" class="uri">https://doi.org/10.3102/1076998616646200</a></p></li>
+</ol>
+</div>

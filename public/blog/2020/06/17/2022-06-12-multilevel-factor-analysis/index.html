@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    <meta charset="utf-8">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Multilevel Confirmatory Factor Analysis</title>
+<meta name="author" content="R. Noah Padgett" />
+
+
+
+
+<meta name="keywords" content="noah-padgett, statistics, go">
+
+
+<meta name="description" content="Site template made by Devcows using Hugo">
+
+<meta name="generator" content="Hugo 0.80.0" />
+
+
+<link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,500,700,800' rel='stylesheet' type='text/css'>
+
+
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.11.2/css/all.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link href="/padgett-website/css/animate.css" rel="stylesheet">
+
+
+
+  <link href="/padgett-website/css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
+
+
+
+<link href="/padgett-website/css/custom.css?1655505036" rel="stylesheet">
+
+
+
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+
+<link rel="shortcut icon" href="/padgett-website/img/logo-temp.ico" type="image/x-icon" />
+<link rel="apple-touch-icon" href="/padgett-website/img/logo-temp.png" />
+
+
+<link href="/padgett-website/css/owl.carousel.css" rel="stylesheet">
+<link href="/padgett-website/css/owl.theme.css" rel="stylesheet">
+
+
+<link rel="alternate" href="https://noah-padgett.github.io/index.xml" type="application/rss+xml" title="Padgett - MMSCALED">
+
+
+
+
+
+
+
+
+<meta property="og:locale" content="en_us">
+<meta property="og:site_name" content="Padgett - MMSCALED">
+<meta property="og:title" content="Multilevel Confirmatory Factor Analysis">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://noah-padgett.github.io/padgett-website/blog/2020/06/17/2022-06-12-multilevel-factor-analysis/" />
+<meta property="og:description" content="Site template made by Devcows using Hugo">
+<meta property="og:image" content="https://noah-padgett.github.io/padgett-website/img/sharing-default.png">
+<meta property="og:image:type" content="image/png">
+
+
+
+  <meta property="og:image:width" content="800">
+  <meta property="og:image:height" content="420">
+
+
+<meta property="og:updated_time" content="2020-06-17T00:00:00Z">
+
+  
+  
+  
+  
+  
+  <meta property="article:published_time" content="2020-06-17T00:00:00Z">
+  <meta property="article:modified_time" content="2020-06-17T00:00:00Z">
+
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@rnoahpadgett">
+<meta name="twitter:title" content="Multilevel Confirmatory Factor Analysis">
+
+<meta name="twitter:image" content="https://noah-padgett.github.io/padgett-website/img/sharing-default.png">
+
+<meta name="twitter:description" content="Site template made by Devcows using Hugo">
+
+
+    
+<title>Multilevel Confirmatory Factor Analysis</title>
+  </head>
+
+  <body>
+
+    <div id="all">
+
+        
+<header>
+  <div id="top">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-5">
+          <p class="hidden-sm hidden-xs">Contact me at noah_padgett1@baylor.edu.</p>
+      <a href="mailto:noah_padgett1@baylor.edu" data-animate-hover="pulse"><i class="fas fa-envelope"></i></a>
+      </p>
+      
+        </div>
+        <div class="col-xs-7">
+          <div class="social">
+            
+            <a href="https://github.com/noah-padgett/" target="_blank" style="opacity: 1;"><i class='fab fa-2x fa-github'></i></a>
+            
+            <a href="mailto:Noah_Padgett1@baylor.edu" target="_blank" style="opacity: 1;"><i class='fas fa-2x fa-envelope'></i></a>
+            
+            <a href="http://twitter.com" target="_blank" style="opacity: 1;"><i class='fab fa-2x fa-twitter'></i></a>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+        <header class="navbar-affixed-top" data-spy="affix" data-offset-top="62">
+    <div class="navbar navbar-default yamm " role="navigation" id="navbar">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand home" href="/padgett-website/">
+                    
+                      <h4>noah-padgett.github.io</h4>
+                    
+                    <span class="sr-only">Multilevel Confirmatory Factor Analysis - go to homepage</span>
+                </a>
+                <div class="navbar-buttons">
+                    <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
+                      <span class="sr-only">Toggle Navigation</span>
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+                </div>
+            </div>
+            
+
+            <div class="navbar-collapse collapse" id="navigation">
+                <ul class="nav navbar-nav navbar-right">
+                  
+
+                  
+                  
+                  
+
+                  
+
+                  
+
+                  
+
+                  
+                  <li class="dropdown ">
+                    <a href="/padgett-website/">Home</a>
+                  </li>
+                  
+                  
+                  
+                  
+
+                  
+
+                  
+
+                  
+
+                  
+                  <li class="dropdown ">
+                    <a href="/padgett-website/writing/">Writing</a>
+                  </li>
+                  
+                  
+                  
+                  
+
+                  
+
+                  
+
+                  
+
+                  
+                  <li class="dropdown ">
+                    <a href="/padgett-website/research/">Research</a>
+                  </li>
+                  
+                  
+                  
+                  
+
+                  
+
+                  
+
+                  
+
+                  
+                  <li class="dropdown ">
+                    <a href="/padgett-website/courses/">Courses</a>
+                  </li>
+                  
+                  
+                </ul>
+            </div>
+            
+
+            <div class="collapse clearfix" id="search">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fas fa-search"></i></button>
+                </span>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</header>
+
+
+
+
+        <div id="heading-breadcrumbs">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Multilevel Confirmatory Factor Analysis</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        <div id="content">
+            <div class="container">
+
+                <div class="row">
+
+                    
+
+                    <div class="col-md-9" id="blog-post">
+
+                        
+                          <p class="text-muted text-uppercase mb-small text-right">
+                            
+                            
+                            
+                              
+                              
+                                  
+                              
+                                  
+                              
+                                  
+                              
+                                  
+                              
+                                  
+                              
+                                  
+                              
+                                  
+                              
+                                  
+                              
+                                  
+                              
+                                  
+                              
+                                  
+                              
+                                  
+                              
+                              June 17, 2020
+                            
+                          </p>
+                        
+
+                        <div id="post-content">
+                          
+
+
+<p>Multilevel confirmatory factory analysis (ML-CFA) is a fancy analysis.
+So fancy in fact, I’m still not convinced if the analysis can be used properly.
+My interest in ML-CFA stemmed from a study a colleague and I did as part of a meta-analysis on a cross-cultural resilience measurement scale (Renbarger et al., In Press).
+Our aim was to use raw data from as many studies we could obtain and investigate the multilevel structure of the measure.
+The key result we were interested in was whether the measurement of the construct significantly varied across groups.
+We hypothesized that an invariant factor existed across levels (namely, resilience in youth).
+We investigated what proportion of variance in resilience was between groups compared to within group.
+This may sound familiar to an <em>intraclass correlation</em> from traditional multilevel modeling, and if fact this is what we were interested in (or at the very least I was lol).
+Basically, the analysis boiled down to me being confused about how the actually use ML-CFA.
+So, here is my understanding(-ish) of a basic(-ish) <strong>multilevel factor analysis model</strong>.</p>
+<div id="the-model" class="section level1">
+<h1>The Model</h1>
+<p>The model at it’s core feels quite intuitive.
+The model starts with saying that the all items/indicators is a combination of individual component (<span class="math inline">\(y_{i}\)</span> or <span class="math inline">\(y_{individual}\)</span>) and a group average component (<span class="math inline">\(y_{g}\)</span> or <span class="math inline">\(y_{group}\)</span>):</p>
+<p><span class="math display">\[y_{ig} = y_{i} + y_{g}\]</span>
+or equivalently,
+<span class="math display">\[y_{total} = y_{individual} + y_{group}\]</span>
+The group component to individual items can be thought of as the <em>average</em> for the group.
+In factor analysis though, we usually have many items that are reflective of some underlying construct of interest (e.g., youth resilience, motivation, perceived degree of safety, etc.).
+When we have multiple items/indicators we have to replace our nice simple additive pieces into a sum of multivariate pieces (say for <span class="math inline">\(J\)</span> items),</p>
+<p><span class="math display">\[\mathbf{y}_{ig} = \mathbf{y}_{i} + \mathbf{y}_{g}\]</span>
+where each is a vector of length <span class="math inline">\(J\)</span>.
+Part of the purpose of factor analysis is to develop a theoretical model for how each component contributes to the total observed score on each item.
+Hence, the connection to factor analysis.
+For a single item <span class="math inline">\(j\)</span>, the observed score is a partial manifestation of the underlying construct of interest.
+This results in a decomposition of the observed score into the individual (within group) contribution and the group effect
+<span class="math display">\[\begin{align*}
+y_{ij} &amp;= \tau_{ij} + \lambda_{ij}\eta_{i} + \varepsilon_{ij}\\ 
+y_{gj} &amp;= \tau_{gj} + \lambda_{gj}\eta_{g} + \varepsilon_{gj}
+\end{align*}\]</span>
+where</p>
+<ul>
+<li><span class="math inline">\(\tau\)</span> is the intercepts at each level:
+<ul>
+<li><span class="math inline">\(\tau_{ij}\)</span> is the within group average response to item <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(\tau_{ij}\)</span> is the between group or <em>grand mean</em> response to item <span class="math inline">\(j\)</span></li>
+</ul></li>
+<li><span class="math inline">\(\lambda\)</span> are the factor loadings that relate the construct(s) to items
+<ul>
+<li><span class="math inline">\(\lambda_{ij}\)</span> is the strength of the relationship between the within group construct and the within group contribution of the total score for item <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(\lambda_{ij}\)</span> is the strength of the relationship between the between group construct and the group contribution of the total score for item <span class="math inline">\(j\)</span></li>
+<li>the pattern of loadings of each level may be different</li>
+<li>the individual level loading matrix helps describe how individuals item response (or the level-1 units/respondents) are grouping together</li>
+<li>while the group level loading matrix helps describe how the average responses to items groups together</li>
+<li>I find it helpful to think of ML-CFA as a type of <strong>clustering model</strong> for the items/variables where we cluster items in two ways:
+<ol style="list-style-type: decimal">
+<li>by individual response</li>
+<li>by average responses to items</li>
+</ol></li>
+</ul></li>
+<li><span class="math inline">\(\eta\)</span> are the random effects typically interpreted as the amount of a latent variable
+<ul>
+<li><span class="math inline">\(\eta_{i}\)</span> is the individual level latent variable that varies over individuals within a group</li>
+<li><span class="math inline">\(\eta_{g}\)</span> is the group level latent variable that groups between groups so that all individuals within a group have the same value for this variable</li>
+<li>Confusingly, the latent variables don’t have to represent the same construct (rarely do they according to what seen published)</li>
+<li>If they do represent the same construct, then <span class="math inline">\(\lambda_{ij}=\lambda_{gj}\)</span> such that the group latent variable <span class="math inline">\(\eta_{g}\)</span> then represents the group level deviation on the latent variable
+<ul>
+<li>If the above happens to be true, the model simplifies to
+<span class="math display">\[y_{igj} = \tau_{igj} + \lambda_{j}(\eta_{i} + \eta_{g}) + \varepsilon_{ij} + \varepsilon_{gj}\]</span></li>
+</ul></li>
+</ul></li>
+<li><span class="math inline">\(\varepsilon\)</span> are the error terms associated with each level</li>
+</ul>
+<p>The full model, when put all together can be expressed inthe painful(ish) form of</p>
+<p><span class="math display">\[\mathbf{y}_{ig} = \boldsymbol{\tau}_{i} + \boldsymbol{\Lambda}_{i}\boldsymbol{\eta}_{i} + \boldsymbol{\tau}_g + \boldsymbol{\Lambda}_{g}\boldsymbol{\eta}_{g} + \boldsymbol{\varepsilon}_{i} + \boldsymbol{\varepsilon}_{g}\]</span>
+where this model can even be parameterized in a variety of different ways as well.
+Maybe I will dive in to those in a future spurt of random thoughts.</p>
+<p>Anyways, through learning about this model I have still wondered what other insights can be extracted.
+I still have much to learn about how these complex multilevel models can be used and in what other scenarios people find them useful.
+Anyone interested in these types of models may find the work of Laura Stapleton very enlightening and I highly recommend her 2016 piece on construct meaning.</p>
+</div>
+<div id="references" class="section level1">
+<h1>References</h1>
+<ol style="list-style-type: decimal">
+<li><p>Renbarger, R. L., Padgett, R. N., Cowden, R. G., Govender, K., George, G., Makhnach, A.V., Novotny, J.S., Nugent, G., Rosenbaum, L., &amp; Kremenkova, L. (In Press). Culturally relevant resilience: A psychometric meta-analysis of the Child and Youth Resilience Measure (CYRM). .</p></li>
+<li><p>Stapleton, L. M., Yang, J. S., &amp; Hancock, G. R. (2016). Construct Meaning in Multilevel Settings. Journal of Educational and Behavioral Statistics, 41(5), 481–520. <a href="https://doi.org/10.3102/1076998616646200" class="uri">https://doi.org/10.3102/1076998616646200</a></p></li>
+</ol>
+</div>
+
+                        </div>
+                        
+                        
+
+                    </div>
+                    
+
+                    
+
+                    
+
+                    <div class="col-md-3">
+
+                        
+
+                        
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+      <h3 class="panel-title">Search</h3>
+    </div>
+
+    <div class="panel-body">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" role="search">
+            <div class="input-group">
+                <input type="search" name="q" class="form-control" placeholder="Search">
+                <input type="hidden" name="sitesearch" value="https://noah-padgett.github.io/">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-template-main"><i class="fas fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Categories</h3>
+    </div>
+
+    <div class="panel-body">
+        <ul class="nav nav-pills nav-stacked">
+            
+            
+            <li>
+                <a href="/padgett-website/categories/lorem">LOREM (1)</a>
+            </li>
+            
+            <li>
+                <a href="/padgett-website/categories/programming">PROGRAMMING (3)</a>
+            </li>
+            
+            <li>
+                <a href="/padgett-website/categories/pseudo">PSEUDO (1)</a>
+            </li>
+            
+            <li>
+                <a href="/padgett-website/categories/r">R (4)</a>
+            </li>
+            
+            <li>
+                <a href="/padgett-website/categories/simulation">SIMULATION (2)</a>
+            </li>
+            
+            <li>
+                <a href="/padgett-website/categories/stan">STAN (1)</a>
+            </li>
+            
+            <li>
+                <a href="/padgett-website/categories/starting">STARTING (1)</a>
+            </li>
+            
+            <li>
+                <a href="/padgett-website/categories/tutorial">TUTORIAL (3)</a>
+            </li>
+            
+        </ul>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<div class="panel sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Tags</h3>
+    </div>
+
+    <div class="panel-body">
+        <ul class="tag-cloud">
+            
+            
+            <li >
+                <a href="/padgett-website/tags/go"><i class="fas fa-tags"></i> go</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/golang"><i class="fas fa-tags"></i> golang</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/hugo"><i class="fas fa-tags"></i> hugo</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/plot"><i class="fas fa-tags"></i> plot</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/programming"><i class="fas fa-tags"></i> programming</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/r"><i class="fas fa-tags"></i> r</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/r-markdown"><i class="fas fa-tags"></i> r-markdown</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/regression"><i class="fas fa-tags"></i> regression</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/simulation"><i class="fas fa-tags"></i> simulation</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/stan"><i class="fas fa-tags"></i> stan</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/theme"><i class="fas fa-tags"></i> theme</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/trouble"><i class="fas fa-tags"></i> trouble</a>
+            </li>
+            
+            <li >
+                <a href="/padgett-website/tags/tutorial"><i class="fas fa-tags"></i> tutorial</a>
+            </li>
+            
+        </ul>
+    </div>
+
+</div>
+
+
+
+
+
+
+                        
+
+                    </div>
+                    
+
+                    
+
+                </div>
+                
+
+            </div>
+            
+        </div>
+        
+
+        
+
+
+
+
+
+
+
+
+<div id="copyright">
+    <div class="container">
+        <div class="col-md-8">
+            
+            <p class="pull-left">Copyright (c) 2022, R. Noah Padgett; all rights reserved.</p>
+            
+            <p class="pull-right">
+              Template by <a href="https://bootstrapious.com/p/universal-business-e-commerce-template">Bootstrapious</a>.
+              
+
+              
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    </div>
+    
+
+    
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-130771307-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src="//code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0/jquery.counterup.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-parallax/1.1.3/jquery-parallax.js"></script>
+
+
+<script src="/padgett-website/js/front.js"></script>
+
+
+<script src="/padgett-website/js/owl.carousel.min.js"></script>
+
+
+
+  </body>
+</html>

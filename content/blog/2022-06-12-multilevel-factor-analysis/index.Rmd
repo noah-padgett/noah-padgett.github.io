@@ -1,0 +1,81 @@
+---
+title: Multilevel Confirmatory Factor Analysis
+date: 2020-06-17
+math: true
+diagram: true
+# image:
+#   placement: 3
+#   caption: 'Image credit: [**John Moeses Bauan**](https://unsplash.com/photos/OGZtQF8iC0g)'
+---
+
+Multilevel confirmatory factory analysis (ML-CFA) is a fancy analysis.
+So fancy in fact, I'm still not convinced if the analysis can be used properly.
+My interest in ML-CFA stemmed from a study a colleague and I did as part of a meta-analysis on a cross-cultural resilience measurement scale (Renbarger et al., In Press).
+Our aim was to use raw data from as many studies we could obtain and investigate the multilevel structure of the measure.
+The key result we were interested in was whether the measurement of the construct significantly varied across groups.
+We hypothesized that an invariant factor existed across levels (namely, resilience in youth).
+We investigated what proportion of variance in resilience was between groups compared to within group.
+This may sound familiar to an *intraclass correlation* from traditional multilevel modeling, and if fact this is what we were interested in (or at the very least I was lol).
+Basically, the analysis boiled down to me being confused about how the actually use ML-CFA.
+So, here is my understanding(-ish) of a basic(-ish) **multilevel factor analysis model**.
+
+# The Model
+
+The model at it's core feels quite intuitive.
+The model starts with saying that the all items/indicators is a combination of individual component ($y_{i}$ or $y_{individual}$) and a group average component ($y_{g}$ or $y_{group}$):
+
+$$y_{ig} = y_{i} + y_{g}$$
+or equivalently, 
+$$y_{total} = y_{individual} + y_{group}$$
+The group component to individual items can be thought of as the *average* for the group.
+In factor analysis though, we usually have many items that are reflective of some underlying construct of interest (e.g., youth resilience, motivation, perceived degree of safety, etc.).
+When we have multiple items/indicators we have to replace our nice simple additive pieces into a sum of multivariate pieces (say for $J$ items),
+
+$$\mathbf{y}_{ig} = \mathbf{y}_{i} + \mathbf{y}_{g}$$
+where each is a vector of length $J$.
+Part of the purpose of factor analysis is to develop a theoretical model for how each component contributes to the total observed score on each item.
+Hence, the connection to factor analysis.
+For a single item $j$, the observed score is a partial manifestation of the underlying construct of interest.
+This results in a decomposition of the observed score into the individual (within group) contribution and the group effect
+\begin{align*}
+y_{ij} &= \tau_{ij} + \lambda_{ij}\eta_{i} + \varepsilon_{ij}\\ 
+y_{gj} &= \tau_{gj} + \lambda_{gj}\eta_{g} + \varepsilon_{gj}
+\end{align*}
+where 
+
+* $\tau$ is the intercepts at each level:
+  - $\tau_{ij}$ is the within group average response to item $j$
+  - $\tau_{ij}$ is the between group or *grand mean* response to item $j$
+* $\lambda$ are the factor loadings that relate the construct(s) to items
+  - $\lambda_{ij}$ is the strength of the relationship between the within group construct and the within group contribution of the total score for item $j$
+  - $\lambda_{ij}$ is the strength of the relationship between the between group construct and the group contribution of the total score for item $j$
+  - the pattern of loadings of each level may be different
+  - the individual level loading matrix helps describe how individuals item response (or the level-1 units/respondents) are grouping together
+  - while the group level loading matrix helps describe how the average responses to items groups together
+  - I find it helpful to think of ML-CFA as a type of **clustering model** for the items/variables where we cluster items in two ways:
+    1. by individual response
+    2. by average responses to items
+* $\eta$ are the random effects typically interpreted as the amount of a latent variable
+  - $\eta_{i}$ is the individual level latent variable that varies over individuals within a group
+  - $\eta_{g}$ is the group level latent variable that groups between groups so that all individuals within a group have the same value for this variable
+  - Confusingly, the latent variables don't have to represent the same construct (rarely do they according to what seen published)
+  - If they do represent the same construct, then $\lambda_{ij}=\lambda_{gj}$ such that the group latent variable $\eta_{g}$ then represents the group level deviation on the latent variable
+    + If the above happens to be true, the model simplifies to
+    $$y_{igj} = \tau_{igj} + \lambda_{j}(\eta_{i} + \eta_{g}) + \varepsilon_{ij} + \varepsilon_{gj}$$ 
+* $\varepsilon$ are the error terms associated with each level
+
+The full model, when put all together can be expressed inthe painful(ish) form of
+
+$$\mathbf{y}_{ig} = \boldsymbol{\tau}_{i} + \boldsymbol{\Lambda}_{i}\boldsymbol{\eta}_{i} + \boldsymbol{\tau}_g + \boldsymbol{\Lambda}_{g}\boldsymbol{\eta}_{g} + \boldsymbol{\varepsilon}_{i} + \boldsymbol{\varepsilon}_{g}$$
+where this model can even be parameterized in a variety of different ways as well.
+Maybe I will dive in to those in a future spurt of random thoughts.
+
+Anyways, through learning about this model I have still wondered what other insights can be extracted.
+I still have much to learn about how these complex multilevel models can be used and in what other scenarios people find them useful.
+Anyone interested in these types of models may find the work of Laura Stapleton very enlightening and I highly recommend her 2016 piece on construct meaning.
+
+# References
+
+1. Renbarger, R. L., Padgett, R. N., Cowden, R. G., Govender, K., George, G., Makhnach, A.V., Novotny, J.S., Nugent, G., Rosenbaum, L., \& Kremenkova, L. (In Press). Culturally relevant resilience: A psychometric meta-analysis of the Child and Youth Resilience Measure (CYRM). \textit{Journal of Research on Adolescence}.
+
+2. Stapleton, L. M., Yang, J. S., & Hancock, G. R. (2016). Construct Meaning in Multilevel Settings. Journal of Educational and Behavioral Statistics, 41(5), 481–520. https://doi.org/10.3102/1076998616646200

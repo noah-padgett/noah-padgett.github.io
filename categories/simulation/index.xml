@@ -1,35 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>simulation on Padgett: Beyond-STAT</title>
-    <link>/categories/simulation/</link>
-    <description>Recent content in simulation on Padgett: Beyond-STAT</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>&amp;copy; 2019</copyright>
-    <lastBuildDate>Sun, 14 Apr 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/simulation/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Simulating Data from Regression Models</title>
-      <link>/tutorial/2019-04-21-r-reg-sim/</link>
-      <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tutorial/2019-04-21-r-reg-sim/</guid>
-      <description>This file extends the introduction I gave to simulating data from coin flips. Now, the goal is to show how the basics extend and can easily be used for helpful parts of study design planning.
-Simulating More Complex Models We can easily extend the basic concepts of simulating from a simple population to simulating data from a more complex data structure. This is how we can simulate a simple regression model with one outcome (Y) and five predictors (x1, x2, etc.</description>
-    </item>
-    
-    <item>
-      <title>Introduction to R and Simulating Data</title>
-      <link>/tutorial/2018-12-10-r-simple-sim.rmarkdown/</link>
-      <pubDate>Tue, 15 Jan 2019 21:13:14 -0500</pubDate>
-      
-      <guid>/tutorial/2018-12-10-r-simple-sim.rmarkdown/</guid>
-      <description>Before we get started with an introduction to simulation, we need to make sure that R and R Studio are downloaded on your computers.R is an open source and free statistical programming language.R utilizes user built ‘packages.’The package library is huge and you can find a package that does nearly anything you need it to and a large number of these are regularly updated.We will talk about packages a lot over the never few years so this is kind of tertiary.</description>
-    </item>
-    
-  </channel>
-</rss>

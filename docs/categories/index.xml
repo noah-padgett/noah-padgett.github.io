@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Padgett - MMSCALED</title>
+    <link>https://noah-padgett.github.io/padgett-website/categories/</link>
+    <description>Recent content in Categories on Padgett - MMSCALED</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 01 Aug 2021 21:29:20 +0200</lastBuildDate><atom:link href="https://noah-padgett.github.io/padgett-website/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>lorem</title>
+      <link>https://noah-padgett.github.io/padgett-website/categories/lorem/</link>
+      <pubDate>Sun, 01 Aug 2021 21:29:20 +0200</pubDate>
+      
+      <guid>https://noah-padgett.github.io/padgett-website/categories/lorem/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>programming</title>
+      <link>https://noah-padgett.github.io/padgett-website/categories/programming/</link>
+      <pubDate>Sun, 01 Aug 2021 21:29:20 +0200</pubDate>
+      
+      <guid>https://noah-padgett.github.io/padgett-website/categories/programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pseudo</title>
+      <link>https://noah-padgett.github.io/padgett-website/categories/pseudo/</link>
+      <pubDate>Sun, 01 Aug 2021 21:29:20 +0200</pubDate>
+      
+      <guid>https://noah-padgett.github.io/padgett-website/categories/pseudo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://noah-padgett.github.io/padgett-website/categories/r/</link>
+      <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
+      
+      <guid>https://noah-padgett.github.io/padgett-website/categories/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Stan</title>
+      <link>https://noah-padgett.github.io/padgett-website/categories/stan/</link>
+      <pubDate>Fri, 06 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://noah-padgett.github.io/padgett-website/categories/stan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>https://noah-padgett.github.io/padgett-website/categories/tutorial/</link>
+      <pubDate>Fri, 06 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://noah-padgett.github.io/padgett-website/categories/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>simulation</title>
+      <link>https://noah-padgett.github.io/padgett-website/categories/simulation/</link>
+      <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://noah-padgett.github.io/padgett-website/categories/simulation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>starting</title>
+      <link>https://noah-padgett.github.io/padgett-website/categories/starting/</link>
+      <pubDate>Wed, 24 Jun 2015 13:50:46 +0200</pubDate>
+      
+      <guid>https://noah-padgett.github.io/padgett-website/categories/starting/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

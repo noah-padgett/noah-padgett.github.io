@@ -1,0 +1,296 @@
+---
+title: Survey weights are confusing... what do you do with them anyways
+date: 2020-04-11
+math: true
+diagram: true
+# image:
+#   placement: 3
+#   caption: 'Image credit: [**John Moeses Bauan**](https://unsplash.com/photos/OGZtQF8iC0g)'
+---
+
+
+
+<p>I’m had some great opportunities to work national datasets such as National Assessment of Educational Progress <a href="https://nces.ed.gov/nationsreportcard/about/">(NAEP)</a>.
+But, throughout my use of the various datasets I’ve started diving into, I’ve kept coming up with questions about the complex design of the sampling frame.
+I’m slowly building my understanding of the complexities of sampling, and NAEP certainly gives me a lot of food for thought.
+For NAEP, these sampling design nuances boils down into multiple levels such as</p>
+<ul>
+<li>Strata,</li>
+<li>Schools, and</li>
+<li>Students</li>
+</ul>
+<p>and there are even more levels and nuances. Basically, during my work with these data I’ve had a fun time trying to wrap my mind around these issues and how they influence downstream analyses.
+The downstream analyses is what I primarily focus on and want to try to get a better understanding on what needs to happen to appropriately handle these nuances.</p>
+<p>I’ve been reading up on some of the issues with complex sampling design in Thomas Lumley’s <a href="http://r-survey.r-forge.r-project.org/survey/">Complex Surveys text and the survey package</a>.
+Which have been great resources for more information how these survey issues are handled in various contexts.
+One issue that I have not been able to find a nice solution so yet is the relationship between survey weights and Bayesian inference.
+Basically, I’m learning a lot and trying to figure out how survey inferences can map into these other areas I’m learning about so it’s all kinda of mess at the moment.
+Anyways, I’m starting to really like modeling from a Bayesian context and I’m enjoying the coding, math, and theory behind a lot of the Bayes I’ve done so far.
+But, this issue of survey’s hasn’t really come up yet and I wanted to dive into it a bit.
+This brought me to a post by Bob Carpenter <a href="https://statmodeling.stat.columbia.edu/2019/10/29/non-random-missing-data-weights-generative-model/">here</a> and I’m interigued by these ideas.
+Which also led me back to Thomas’ blog where he talks a lot of survey designs and gives some great updates on the survey package.
+Next I wanted to try out some of Bob’s ideas to see if I can reproduce these issues.</p>
+<div id="a-normal-data-sampling-issue" class="section level1">
+<h1>A normal data sampling issue</h1>
+<p>I’m going to take a page from some previous work I did in undergrad and build up a small population and try to bring it back down to something I can take bite out of.</p>
+<p>So, suppose we have a population of size <span class="math inline">\(N_{pop}\)</span>, which we can roughly say what this size is.
+We want to sample from this population to approximate what a particular parameter is, say <span class="math inline">\(\theta\)</span>, of this population is.
+That is, we could take</p>
+<ol style="list-style-type: decimal">
+<li>A simple random sample of size <span class="math inline">\(N_{obs}\)</span>.</li>
+<li>A stratified random sample where we split the total population into groups then sample within these groups so that we get a total of <span class="math inline">\(N_{obs}\)</span>.</li>
+</ol>
+<p>I’m not well versed yet in the nuances of different types of stratified or cluster sampling so I’m going to try to keep this simple-ish.
+So lets say in the population we have a characteristic <span class="math inline">\(Y\)</span> we are interested in where
+<span class="math display">\[Y\sim N(\theta, \sigma^2)\]</span>
+so we have a relatively simple characteristic we are interested in, namely the mean/location parameter of the normal distribution.
+I’m gonna build this population and see what I can do to futz with it.</p>
+<pre class="r"><code>N_pop &lt;- 10000  # total population
+mu &lt;- 50        # population mean
+sigma &lt;- 10     # population SD</code></pre>
+<p>SO, we now have a fancy population that is approximately a old-school T-distribution for test scores.
+Great, it’s so not helpful at all for helping me understand survey weights…
+Let’s add in some fun with levels to the data, say we have 100 groups/strata that this population can be grouped in.
+But to make things even more fun lets say these groups have slightly different means, that is the group means vary randomly around the population mean.</p>
+<pre class="r"><code>G &lt;- 5 # number of groups
+mu_g &lt;- rnorm(G, 0, 1) # group deviation from population mean
+G_mean &lt;- mu + mu_g # group mean</code></pre>
+<p>Now, let’s build a population that’s a little more fancy looking (and yes, I completely realize this is likely missing the forest for the trees…).
+I essentially just wanted to build a population where sampling proportional to size may be probablematic.</p>
+<pre class="r"><code>G_size &lt;- N_pop*c(0.4, 0.3, 0.1, 0.1, 0.1)
+
+Mg &lt;- rep(G_mean, G_size)
+
+Y_pop &lt;- rnorm(length(Mg), Mg, 10)
+popdata &lt;- data.frame(Y=Y_pop, G=factor(rep(1:G, G_size)))</code></pre>
+<p>Now that we have some fancy looking clustered data, let’s sample from it and see what we can get out.</p>
+<div id="simple-random-sample" class="section level2">
+<h2>Simple random sample</h2>
+<p>Here an SRS is straightforward, we take our population <span class="math inline">\(N_{pop}\)</span> and we take a random sample from it.
+This means that every case is equally likely to be sampled.
+Or said another way, the probability of being sampled is equal for all observations.</p>
+<p><span class="math display">\[\pi_i = 1/N_{pop}\]</span>
+where <span class="math inline">\(\pi_i\)</span> is the probability of being included in the sample.</p>
+<pre class="r"><code>popdata$pi_srs &lt;- 1/N_pop
+
+N_obs &lt;- 100
+Y_obs &lt;- sample(x=popdata$Y, size=N_obs, prob=popdata$pi_srs)
+
+mean(Y_obs)</code></pre>
+<pre><code>## [1] 50.0389</code></pre>
+<pre class="r"><code>sd(Y_obs)</code></pre>
+<pre><code>## [1] 10.34016</code></pre>
+<p>So when we take our simple random sample from the population we a sample mean and SD that seem close, but how well does this work if we did it a huge number of times?</p>
+<p>I want to find out.</p>
+<div id="srs-recovery" class="section level3">
+<h3>SRS Recovery</h3>
+<p>I don’t know a better term that recovery for looking at how well we can sample and get the population characteristic back out.
+First, a model can be used for describing the mean.</p>
+<pre class="r"><code>library(rstan)</code></pre>
+<pre><code>## Loading required package: StanHeaders</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## rstan (Version 2.19.2, GitRev: 2e1f913d3ca3)</code></pre>
+<pre><code>## For execution on a local, multicore CPU with excess RAM we recommend calling
+## options(mc.cores = parallel::detectCores()).
+## To avoid recompilation of unchanged Stan programs, we recommend calling
+## rstan_options(auto_write = TRUE)</code></pre>
+<pre><code>## For improved execution time, we recommend calling
+## Sys.setenv(LOCAL_CPPFLAGS = &#39;-march=native&#39;)
+## although this causes Stan to throw an error on a few processors.</code></pre>
+<pre class="r"><code>model &lt;- &quot;
+data {
+  int n;
+  real Y[n];
+}
+
+parameters {
+  real mu;
+}
+
+model {
+  //data model
+  Y ~ normal(mu, 10);
+  //prior
+  mu ~ normal(50,20);
+}
+
+&quot;</code></pre>
+<p>Below is a simple simulation to check this out.</p>
+<pre class="r"><code>nsim &lt;- 1000
+sim.mean &lt;- numeric(nsim)
+sim.sd &lt;- numeric(nsim)
+sim.ll &lt;- numeric(nsim)
+sim.ul &lt;- numeric(nsim)
+sim.cov &lt;- numeric(nsim) 
+i &lt;- 1
+for(i in 1:nsim){
+  yi &lt;- sample(x=popdata$Y, size=N_obs, prob=popdata$pi_srs)
+  dati &lt;- list(n=length(yi), Y=yi)
+  fit &lt;- stan(model_code=model, data = dati,
+            chains = 1, iter = 1000, refresh=0)
+  mu_ss &lt;- extract(fit)$mu
+  sim.mean[i] &lt;- mean(mu_ss)
+  sim.sd[i] &lt;- sd(mu_ss)
+  sim.ll[i] &lt;- quantile(mu_ss, 0.025)
+  sim.ul[i] &lt;- quantile(mu_ss, 0.975)
+  sim.cov[i] &lt;- (sim.ll[i] &lt; mu) &amp; (sim.ul[i] &gt; mu)
+}
+
+# coverage
+mean(sim.cov)</code></pre>
+<pre><code>## [1] 0.962</code></pre>
+<pre class="r"><code># Average Width
+mean(sim.ul - sim.ll) </code></pre>
+<pre><code>## [1] 3.876474</code></pre>
+<pre class="r"><code>sim &lt;- data.frame(M = sim.mean, SD=sim.sd, LL=sim.ll, UL=sim.ul)
+
+library(ggplot2)
+cols=c(&quot;MEAN&quot;=&quot;#CC79A7&quot;,&quot;LL 2.5%&quot;=&quot;#E69F00&quot;, &quot;UL 97.5%&quot;=&quot;#56B4E9&quot;)
+ggplot()+
+  geom_boxplot(data=sim, aes(y=M, color=&quot;MEAN&quot;),
+               coef=0, outlier.shape=NA)+
+  geom_boxplot(data=sim, aes(y=LL, color=&quot;LL 2.5%&quot;),
+               coef=0, outlier.shape=NA)+
+  geom_boxplot(data=sim, aes(y=UL, color=&quot;UL 97.5%&quot;),
+               coef=0, outlier.shape=NA)+
+  geom_point(aes(x=0,y=50), color=&quot;red&quot;,size=2)+
+  scale_color_manual(name=NULL,values=cols)+
+  lims(y=c(45,55))+
+  theme_bw()</code></pre>
+<p><img src="/post/2020-04-11-surey-sampling/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Well, that works as it should. We get what I assume is nominal coverage using a 95% confidence interval (z=1.96), and we get a pretty picture of what the mean, lower and upper bound looked like across iterations.</p>
+<p>Now let’s sample differently…</p>
+</div>
+</div>
+<div id="stratified-random-sample" class="section level2">
+<h2>Stratified random sample</h2>
+<p>For this I’ll sample say 20 observations from each group.</p>
+<pre class="r"><code>nsim &lt;- 1000
+sim.mean &lt;- numeric(nsim)
+sim.sd &lt;- numeric(nsim)
+sim.ll &lt;- numeric(nsim)
+sim.ul &lt;- numeric(nsim)
+sim.cov &lt;- numeric(nsim) 
+i &lt;- 1
+for(i in 1:nsim){
+  yi &lt;- unlist(tapply(popdata[,1], popdata[,2], sample, size=20))
+  
+  dati &lt;- list(n=length(yi), Y=yi)
+  fit &lt;- stan(model_code=model, data = dati,
+            chains = 1, iter = 1000, refresh=0)
+  mu_ss &lt;- extract(fit)$mu
+  sim.mean[i] &lt;- mean(mu_ss)
+  sim.sd[i] &lt;- sd(mu_ss)
+  sim.ll[i] &lt;- quantile(mu_ss, 0.025)
+  sim.ul[i] &lt;- quantile(mu_ss, 0.975)
+  sim.cov[i] &lt;- (sim.ll[i] &lt; mu) &amp; (sim.ul[i] &gt; mu)
+}
+
+# coverage
+mean(sim.cov)</code></pre>
+<pre><code>## [1] 0.946</code></pre>
+<pre class="r"><code># Average Width
+mean(sim.ul - sim.ll) </code></pre>
+<pre><code>## [1] 3.867119</code></pre>
+<pre class="r"><code>sim &lt;- data.frame(M = sim.mean, SD=sim.sd, LL=sim.ll, UL=sim.ul)
+
+
+cols=c(&quot;MEAN&quot;=&quot;#CC79A7&quot;,&quot;LL 2.5%&quot;=&quot;#E69F00&quot;, &quot;UL 97.5%&quot;=&quot;#56B4E9&quot;)
+ggplot()+
+  geom_boxplot(data=sim, aes(y=M, color=&quot;MEAN&quot;),
+               coef=0, outlier.shape=NA)+
+  geom_boxplot(data=sim, aes(y=LL, color=&quot;LL 2.5%&quot;),
+               coef=0, outlier.shape=NA)+
+  geom_boxplot(data=sim, aes(y=UL, color=&quot;UL 97.5%&quot;),
+               coef=0, outlier.shape=NA)+
+  geom_point(aes(x=0,y=50), color=&quot;red&quot;,size=2)+
+  scale_color_manual(name=NULL,values=cols)+
+  lims(y=c(45,55))+
+  theme_bw()</code></pre>
+<p><img src="/post/2020-04-11-surey-sampling/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>The coverage was below the nominal rate.
+This is likely because participants had an unequal probability of selection.
+In the case above, the probability of inclusion were proportional to the group size, that is
+<span class="math display">\[\pi_i = \pi_g = \frac{1}{ng} = \{0.00025,\ 0.0003,\ 0.001,\ 0.001,\ 0.001\}\]</span></p>
+<p>So, a method for getting the coverage rate back up to the nominal level would be to weight each case by the probability of inclusion.
+Meaning we can account for this in the model and various ways exist for doing so.
+A few methods include</p>
+<ol style="list-style-type: decimal">
+<li>Weighting the likelihood function by the inverse of the probability of inclusion</li>
+<li>Explicitly modeling the levels of the design</li>
+<li>Modeling generativey</li>
+</ol>
+<div id="weighted-likelihood-method" class="section level3">
+<h3>Weighted Likelihood Method</h3>
+<p>Weighting the likelihood can go my various names such as pseudo-likelihood as well.
+Because cases are weighted differentially, the likelihood is not a true likelihood and may case some issues in the estimation.
+So instead of a normal likelihood, we can have</p>
+<p><span class="math display">\[\ell(Y \mid \theta) = \sum w_if(y_i \mid \theta)\]</span></p>
+<pre class="r"><code>model &lt;- &quot;
+data {
+  int n;
+  real Y[n];
+  real pi[n];
+}
+
+parameters {
+  real mu;
+}
+
+model {
+  //data model
+  for(i in 1:n){
+    target += inv(pi[i])*normal_lpdf(Y[i]| mu, 10);
+  }
+  //prior
+  mu ~ normal(50,20);
+}
+
+&quot;</code></pre>
+<pre class="r"><code>nsim &lt;- 1000
+sim.mean &lt;- numeric(nsim)
+sim.sd &lt;- numeric(nsim)
+sim.ll &lt;- numeric(nsim)
+sim.ul &lt;- numeric(nsim)
+sim.cov &lt;- numeric(nsim) 
+i &lt;- 1
+for(i in 1:nsim){
+  yi &lt;- unlist(tapply(popdata[,1], popdata[,2], sample, size=20))
+  pi &lt;- c(0.00025,0.0003,0.001,0.001,0.001)
+  dati &lt;- list(n=length(yi), Y=yi, pi=sort(rep(pi, 20)))
+  fit &lt;- stan(model_code=model, data = dati,
+            chains = 1, iter = 1000, refresh=0)
+  mu_ss &lt;- extract(fit)$mu
+  sim.mean[i] &lt;- mean(mu_ss)
+  sim.sd[i] &lt;- sd(mu_ss)
+  sim.ll[i] &lt;- quantile(mu_ss, 0.025)
+  sim.ul[i] &lt;- quantile(mu_ss, 0.975)
+  sim.cov[i] &lt;- (sim.ll[i] &lt; mu) &amp; (sim.ul[i] &gt; mu)
+}
+
+# coverage
+mean(sim.cov)</code></pre>
+<pre><code>## [1] 0.034</code></pre>
+<pre class="r"><code># Average Width
+mean(sim.ul - sim.ll) </code></pre>
+<pre><code>## [1] 0.08498207</code></pre>
+<pre class="r"><code>sim &lt;- data.frame(M = sim.mean, SD=sim.sd, LL=sim.ll, UL=sim.ul)
+
+
+cols=c(&quot;MEAN&quot;=&quot;#CC79A7&quot;,&quot;LL 2.5%&quot;=&quot;#E69F00&quot;, &quot;UL 97.5%&quot;=&quot;#56B4E9&quot;)
+ggplot()+
+  geom_boxplot(data=sim, aes(y=M, x=1, color=&quot;MEAN&quot;),
+               coef=0, outlier.shape=NA)+
+  geom_boxplot(data=sim, aes(y=LL,x=0, color=&quot;LL 2.5%&quot;),
+               coef=0, outlier.shape=NA)+
+  geom_boxplot(data=sim, aes(y=UL, x=2, color=&quot;UL 97.5%&quot;),
+               coef=0, outlier.shape=NA)+
+  geom_point(aes(x=1,y=50), color=&quot;red&quot;,size=2)+
+  scale_color_manual(name=NULL,values=cols)+
+  lims(y=c(45,55))+
+  theme_bw()</code></pre>
+<p><img src="/post/2020-04-11-surey-sampling/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>So, that was poor…</p>
+</div>
+</div>
+</div>

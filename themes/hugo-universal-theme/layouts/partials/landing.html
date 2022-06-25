@@ -1,0 +1,25 @@
+{{ if isset .Site.Params "landing" }}
+{{ if .Site.Params.landing.enable }}
+<section class="bar no-mb color-white landing-background-color">
+    <div class="container">
+            <div class="col-md-12 landing-text-header">
+                <img class="headshot" src="{{ .Site.Params.landing.image }}" alt="">
+                <h3 class="lead">{{ .Site.Params.landing.title | markdownify }}</h3>
+                <p class="">{{ .Site.Params.landing.subtitle | markdownify }}</p>  
+            </div>
+    </div>
+</section>
+<section class="bar no-mb color-black landing-background-color-body">
+    <!--<div class="dark-mask"></div>-->
+    <div class="container">
+      <div class="col-md-12 landing-text-header">
+        <div class="row">
+          <div class="landing-text-body">
+            {{ .Site.Params.landing.text | safeHTML}}
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{{ end }}
+{{ end }}

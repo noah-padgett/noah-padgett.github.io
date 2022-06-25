@@ -1,0 +1,45 @@
+/* your styles go here */
+/* Example site test */
+
+.box-image-text .image {
+    min-height: 190px;
+    max-height: 190px;
+}
+
+.box-image-text .image img {
+    max-height: 190px;
+    margin: auto;
+}
+
+.box-simple {
+    min-height: 230px;
+}
+
+.landing-text-header {
+  text-align: right;
+}
+
+.landing-text-body {
+  text-align: left;
+  color: black;
+}
+
+.landing-background-color {
+  background-color: #36669c; 
+}
+
+.landing-background-color-body {
+  background-color: #FFFFFF; /*important#b8cee6*/
+  border-color: #36669c;
+}
+
+.headshot {
+    min-height: 175px;
+    max-height: 175px;
+}
+
+
+.headshot img {
+    min-height: 190px;
+    max-height: 190px;
+}
