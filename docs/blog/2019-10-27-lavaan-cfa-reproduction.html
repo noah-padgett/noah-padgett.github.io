@@ -10,8 +10,9 @@
 
 
 
+<meta name="date" content="2019-10-27" />
 
-<title>Introduction to R and Simulating Data</title>
+<title>Reproducing Lavaan from (almost) Scratch</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -361,8 +362,9 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Introduction to R and Simulating Data</h1>
-<h4 class="date">2019-01-15T21:13:14-05:00</h4>
+<h1 class="title toc-ignore">Reproducing Lavaan from (almost)
+Scratch</h1>
+<h4 class="date">2019-10-27</h4>
 
 </div>
 
@@ -370,145 +372,452 @@ pre code {
 true
 </div>
 
-<p>Before we get started with an introduction to simulation, we need to
-make sure that R and R Studio are downloaded on your computers. R is an
-open source and free statistical programming language. R utilizes user
-built ‘packages.’ The package library is huge and you can find a package
-that does nearly anything you need it to and a large number of these are
-regularly updated. We will talk about packages a lot over the never few
-years so this is kind of tertiary.</p>
-<p>Anyways, to install R follow these steps:</p>
-<ol style="list-style-type: decimal">
-<li>Go to <a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a></li>
-<li>Click on ‘to download R’</li>
-<li>Choose a ‘CRAN mirror’, a CRAN mirror is where your computer knows
-to look on the internet to download the software. I suggest <a href="https://cran.revolutionanalytics.com/" class="uri">https://cran.revolutionanalytics.com/</a> which is based out
-of Dallas.</li>
-<li>Select the download that is approriate for your computer.</li>
-<li>Then scroll down to the download: R-3.5.1.pkg (mac) or install for
-the first time (windows).</li>
-</ol>
-<p>These steps will help you install R, next we need to download R
-Studio. R Studio is an interface to use R that is much more friendly and
-easier to work with. You will see this when you open both.</p>
-<ol style="list-style-type: decimal">
-<li>Go to <a href="https://www.rstudio.com/products/rstudio/download/" class="uri">https://www.rstudio.com/products/rstudio/download/</a></li>
-<li>Scroll down to ‘Installers for Supported Platforms’</li>
-<li>Select either the windows or mac version</li>
-</ol>
-<p>Now that we have R and R studio downloaed, let’s dive into an Intro
-to Simulation.</p>
-<div id="intro-to-the-world-of-r" class="section level2">
-<h2>Intro to the World of R</h2>
-<p>R is a statistical programming language. Because R is a programming
-language there is a feel of technicality involved with using the
-software. One of the major difficulties I have found with helping others
-get started with R is getting over the initial struggle. The initial
-struggle is <em>OKAY</em>. I use R nearly everyday and I am constantly
-googling how to solve errors and complete my tasks. Basically, I want to
-convey that it’s perfectly normal to constantly get error messages and
-then ask the world of google how to fix your error.</p>
-<p>So, for starters, R can be broken down to being a fancy calculator.
-For example, below is a simple case for using R as simple calculator. We
-want to find the sum of “1 + 1”. R will automatically return the result
-of 2.</p>
-<pre class="r"><code>1 + 1
-## [1] 2</code></pre>
-<p>Now, this is a little boring. One of the major advantages of using a
-programming language is being able to store different operations into
-what is called an object. An object within R is simply a letter or word
-that represent another symbol or value. For example, we can store the
-summation of “1 + 1” into a single letter “x”. R does this assignment of
-values to words or letters through two different mechanisms. You can use
-“=” or “&lt;-” to make R assign values to objects/letters. However,
-within R it is customary to only use “&lt;-” for basic assignment while
-the “=” is reserved for arguments within functions (I will get to this
-in a moment).</p>
-<pre class="r"><code>## Assign the sum of 1 + 1 to x
-x &lt;- 1 + 1
-## Simply place &quot;x&quot; to see the value stored
-x 
-## [1] 2</code></pre>
-<div id="intro-to-simple-functions" class="section level3">
-<h3>Intro to Simple Functions</h3>
-<p>R is a functional programming language, which means that R is
-designed with tools that take in values to return a result. Now, this is
-super vague and not explicit enough to make sense. One of the simplest
-functions in R is the “print()” function. The print function takes in a
-single argument “x”. This means that based on the value supplied to the
-function print with the argument x, R will display the actual value(s)
-stored in x. For example, suppose we store the phrase “Hello People” in
-the object “y”. We can use the print() function to see what the value of
-“y” is when supplied to the functin.</p>
-<pre class="r"><code>## Store &quot;Hello People&quot; in y
-y &lt;- &quot;Hello People&quot;
-## Displaythe value of y
-print(x=y) ## x is theargument of print, and we want to print y
-## [1] &quot;Hello People&quot;</code></pre>
-<p>This concept of storing values into objects to use in functions is
-<strong>extremely</strong> important. We can utilize this idea in any
-number of ways we can imagine. The flexibility to choose how we use the
-simple rules of R provides us with a basis for manipulating data and
-doing more complex statistical analyses. But, for now I will talk a
-little bit about how R can be used to generate values randomly.</p>
-</div>
-</div>
-<div id="brief-introduction-to-probability" class="section level2">
-<h2><em>Brief</em> Introduction to Probability</h2>
-<p>Yes, we are starting with probability. Before we can talk about
-simulating random data, we need to talk briefly about probability.</p>
-<p>Let’s say we have a quarter. A quarter has two sides, HEADS and
-TAILS. These two outcomes are possibly if we flip a coin once. A coin is
-called ‘fair’ if both sides have the same likelihood of occuring. This
-means that over repeated flips of our coin, we would expect that each
-outcome (H vs. T) to occur approximately the same number of times.
-Therefore, if a coin is fair, each outcome H and T will occur 50% of the
-time. In other words, each outcome has a 0.5 probability of
-occuring.</p>
-<p>This is definition note: a probability is strictly between 0 and 1.
-If a probability if said to be outside this range, then the value cannot
-be a probability.</p>
-<p>Probability is based on taking a <em>sample</em> from a
-<em>population</em>. A population is what is often of interest, but we
-rarely have access to the entire population. The US census is an attempt
-to get information from the entire US population. Because of cost and
-time, we take sufficiently large samples from a population to gain
-insight into the population. For example, to empirically test whether a
-coin is fair, we need to flip a coin many times generate the number of
-the times each outcomes occurs. If we flip a coin 1000 times and 500 of
-these turned out to fair, we likely have good evidence that our coin is
-fair. In contrast, if we flipped a coin 3 times and all 3 turned out to
-heads then the question becomes whether or not we ahve enough evidence
-to conclude that the coin is <em>not</em> fair.</p>
-</div>
-<div id="simulating-a-datum" class="section level2">
-<h2>Simulating a Datum</h2>
-<p>In R, we can generate a single sample from a population very easily.
-Take the example of a coin flip. We can specify a population with two
-outcomes Heads and Tails with each outcome begin equally likely. From
-this population, we then take a single draw to obtain a datum.</p>
-<pre class="r"><code>
-# Specify the possible outcomes. We do this by telling R to make an object with two values inside. This is done by using the command  c(.). Values within the () are stuck together
-population &lt;- c(&#39;HEADS&#39;, &#39;TAILS&#39;)
+<p>Purpose:</p>
+<p>To reproduce the maximum likelihood estimates from lavaan. To try, I
+will be using the HolzingerSwineford1939 dataset that comes with lavaan.
+These data form a three factor model with 9 items.</p>
+<div id="lavaan-results" class="section level1">
+<h1>lavaan Results</h1>
+<pre class="r"><code>set.seed(2)
 
-# Specify the Probability of each outcome in the population. Each value in the c(.) must align with the corresponding outcome in the population object. 
-outcomeProb &lt;- c(.5, .5)
+library(lavaan)</code></pre>
+<pre><code>## This is lavaan 0.6-11
+## lavaan is FREE software! Please report any bugs.</code></pre>
+<pre class="r"><code>HS.model &lt;- &#39; visual  =~ x1 + x2 + x3
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9 &#39;
 
-# To generate the random draw, we use the following:
-# x = defined population
-# size = number of sample 
-# replace = TRUE/FALSE? Should sampling be done with replacement?
-sample(x=population, size=1, prob = outcomeProb, replace = T)
-## [1] &quot;HEADS&quot;</code></pre>
+fit.la &lt;- cfa(HS.model, data = HolzingerSwineford1939)
+summary(fit.la, fit.measures = TRUE)</code></pre>
+<pre><code>## lavaan 0.6-11 ended normally after 35 iterations
+## 
+##   Estimator                                         ML
+##   Optimization method                           NLMINB
+##   Number of model parameters                        21
+##                                                       
+##   Number of observations                           301
+##                                                       
+## Model Test User Model:
+##                                                       
+##   Test statistic                                85.306
+##   Degrees of freedom                                24
+##   P-value (Chi-square)                           0.000
+## 
+## Model Test Baseline Model:
+## 
+##   Test statistic                               918.852
+##   Degrees of freedom                                36
+##   P-value                                        0.000
+## 
+## User Model versus Baseline Model:
+## 
+##   Comparative Fit Index (CFI)                    0.931
+##   Tucker-Lewis Index (TLI)                       0.896
+## 
+## Loglikelihood and Information Criteria:
+## 
+##   Loglikelihood user model (H0)              -3737.745
+##   Loglikelihood unrestricted model (H1)      -3695.092
+##                                                       
+##   Akaike (AIC)                                7517.490
+##   Bayesian (BIC)                              7595.339
+##   Sample-size adjusted Bayesian (BIC)         7528.739
+## 
+## Root Mean Square Error of Approximation:
+## 
+##   RMSEA                                          0.092
+##   90 Percent confidence interval - lower         0.071
+##   90 Percent confidence interval - upper         0.114
+##   P-value RMSEA &lt;= 0.05                          0.001
+## 
+## Standardized Root Mean Square Residual:
+## 
+##   SRMR                                           0.065
+## 
+## Parameter Estimates:
+## 
+##   Standard errors                             Standard
+##   Information                                 Expected
+##   Information saturated (h1) model          Structured
+## 
+## Latent Variables:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   visual =~                                           
+##     x1                1.000                           
+##     x2                0.554    0.100    5.554    0.000
+##     x3                0.729    0.109    6.685    0.000
+##   textual =~                                          
+##     x4                1.000                           
+##     x5                1.113    0.065   17.014    0.000
+##     x6                0.926    0.055   16.703    0.000
+##   speed =~                                            
+##     x7                1.000                           
+##     x8                1.180    0.165    7.152    0.000
+##     x9                1.082    0.151    7.155    0.000
+## 
+## Covariances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##   visual ~~                                           
+##     textual           0.408    0.074    5.552    0.000
+##     speed             0.262    0.056    4.660    0.000
+##   textual ~~                                          
+##     speed             0.173    0.049    3.518    0.000
+## 
+## Variances:
+##                    Estimate  Std.Err  z-value  P(&gt;|z|)
+##    .x1                0.549    0.114    4.833    0.000
+##    .x2                1.134    0.102   11.146    0.000
+##    .x3                0.844    0.091    9.317    0.000
+##    .x4                0.371    0.048    7.779    0.000
+##    .x5                0.446    0.058    7.642    0.000
+##    .x6                0.356    0.043    8.277    0.000
+##    .x7                0.799    0.081    9.823    0.000
+##    .x8                0.488    0.074    6.573    0.000
+##    .x9                0.566    0.071    8.003    0.000
+##     visual            0.809    0.145    5.564    0.000
+##     textual           0.979    0.112    8.737    0.000
+##     speed             0.384    0.086    4.451    0.000</code></pre>
+<pre class="r"><code># Fit value
+fit.la@optim$fx</code></pre>
+<pre><code>## [1] 0.1417035</code></pre>
 </div>
-<div id="simulating-data" class="section level2">
-<h2>Simulating Data</h2>
-<p>Now, lets simulate more than one datum. We will now simulate 10 coin
-flips:</p>
-<pre class="r"><code># To do so, we simply adjust the size to 10 instead of 1
-sample(x=population, size=10, prob = outcomeProb, replace = T)
-##  [1] &quot;TAILS&quot; &quot;HEADS&quot; &quot;HEADS&quot; &quot;HEADS&quot; &quot;TAILS&quot; &quot;TAILS&quot; &quot;TAILS&quot; &quot;TAILS&quot; &quot;TAILS&quot;
-## [10] &quot;TAILS&quot;</code></pre>
+<div id="reproducing-lavaan" class="section level1">
+<h1>Reproducing lavaan</h1>
+<p>There are four major sections that I will go through</p>
+<ol style="list-style-type: decimal">
+<li>the fit function set-up</li>
+<li>the data and model prep</li>
+<li>the optimization function and starting value set-up</li>
+<li>estimating the model</li>
+</ol>
+<div id="reproduced-fit-function" class="section level2">
+<h2>1. Reproduced Fit Function</h2>
+<p>Whenever I have read about CFA/SEM, I have been given this kind of
+vague idea on how estimation works. The general idea I have read/been
+talk is that there’s this fit function</p>
+<p><span class="math display">\[F_{ML} =
+\frac{1}{2}\left[\log\mid\mathbf{\Sigma}(\theta)\mid - \log\mid
+\mathbf{S}\mid + tr\left(\mathbf{S}\mathbf{\Sigma}^{-1}(\theta)\right) -
+p\right]\]</span></p>
+<p>where,</p>
+<ul>
+<li><span class="math inline">\(\mid . \mid\)</span> is the determinant
+of a matrix;</li>
+<li><span class="math inline">\(\mathbf{S}\)</span> is the sample
+covariance matrix;</li>
+<li><span class="math inline">\(\mathbf{\Sigma}(\theta)\)</span> is the
+model implied covariance matrix;</li>
+<li><span class="math inline">\(tr(.)\)</span> is the trace of a
+matrix;</li>
+<li><span class="math inline">\(\mathbf{\Sigma}^{-1}(\theta)\)</span> is
+the inverse of the model implied covariance matrix; and</li>
+<li><span class="math inline">\(p\)</span> is the number of
+variables.</li>
+</ul>
+<p>A <em>relatively</em> straightforward implementation of this fit
+function is shown in the following chunk of code. The majority of the
+<em>cfa.fit()</em> function is based on handling the model, data (X),
+and iteratively updating parameter estimates (<span class="math inline">\(\theta\)</span>).</p>
+<p>I first computed the sample related values. For example, the number
+of variables <span class="math inline">\(p\)</span> is simply the number
+of columns in the dataset. The sample covariance matrix is also
+straightforward to get.</p>
+<p>Secondly, the model is unpacked from the model list argument. The
+<em>model</em> argument is a list of three separate matrices for the 1)
+lambda (<span class="math inline">\(\Lambda\)</span>)-factor loading
+matrix, 2) phi (<span class="math inline">\(\Phi\)</span>)-factor
+covariance matrix, and 3) psi (<span class="math inline">\(\Psi\)</span>)-error (co)variance matrix.</p>
+<p>Third, the individual parameter estimates (<span class="math inline">\(\theta\)</span>) are then unpacked and placed into
+the corresponding model components. This was the trickiest part to
+figure out as this part needs to be dynamically related to the model.
+The part that I still am not sure is done generally enough is the
+unpacking of the factor covariance matrix section. Well, this whole
+unpacking could likely be more general, but I will work on this for a
+later implementation.</p>
+<p>Next, the model implied covariance matrix is estimated. The model
+implied covariance matrix is computed using <span class="math inline">\(\Sigma(\theta) = \Lambda\Phi\Lambda^{\mathrm{T}} +
+\Psi\)</span>.</p>
+<p>Finally, the fit function is estimated.</p>
+<pre class="r"><code>cfa.fit&lt;-function(theta, X, model){
+  # Compue sample statistics
+  p&lt;-ncol(X)
+  S&lt;-cov(X)
+  
+  # unpack model
+  lambda &lt;- model[[1]]
+  phi &lt;- model[[2]]
+  psi &lt;- model[[3]]
+  
+  # number factor loadings
+  lam.num &lt;- length(which(is.na(lambda)))
+  lambda[which(is.na(lambda))] &lt;- theta[1:lam.num]
+  # number elements in factor (co)variance matrix
+  phi.num &lt;- length(which(is.na(phi)))
+  if(phi.num &gt; 0){
+    phi[which(is.na(phi))] &lt;- theta[(lam.num+1):(lam.num+phi.num)]
+    phi[upper.tri(phi)] &lt;- phi[lower.tri(phi)]
+  }
+  # number elements in error (co)variance matrix
+  psi.num &lt;- length(which(is.na(psi)))
+  psi[which(is.na(psi))] &lt;- theta[(lam.num+phi.num+1):(lam.num+phi.num+psi.num)]
+  
+  # compute model implied (co)variance matrix
+  Sigma&lt;-lambda%*%phi%*%(t(lambda)) + psi
+  
+  # get inverse of Simga
+  sigInv &lt;- solve(Sigma)
+  # determinates of S &amp; Sigma
+  detS &lt;- det(S)
+  detSig &lt;- det(Sigma)
+  # compute fit function
+  fit &lt;- 0.5*(log(detSig) + trace(sigInv%*%S) - log(detS) - p)
+  #return fit value 
+  return(fit)
+}</code></pre>
+</div>
+<div id="data-and-model-prep" class="section level2">
+<h2>2. Data and Model Prep</h2>
+<p>The data prep itself is relatively easy. For this example at least,
+the data prep is simply extracting the 9 variables (<span class="math inline">\(x_1-x_9\)</span>) from the larger dataframe. The
+main thing is to make the 9 variables into all numeric variables.</p>
+<pre class="r"><code>X &lt;- HolzingerSwineford1939[, paste0(&#39;x&#39;,1:9)]</code></pre>
+<p>The model prep was a little mode involved. Here I needed to set up
+the specification of the model so that two conditions are met.</p>
+<ol style="list-style-type: decimal">
+<li>I specify the model I want to, and</li>
+<li>The model is identified.</li>
+</ol>
+<p>The later of which is the much more technically involved feature.
+Identification is a big topic for statistical analysis, especially in
+the domain of latent variable models where identification can be
+notoriously difficult. However, the basic idea is that we need to be
+able to come up with unique estimates for all parameter values. In the
+CFA model here, the identification can be achieved by fixing the factor
+loading of one item to 1.</p>
+<p>As you will probably see, the specification for the factor covariance
+matrix (<span class="math inline">\(\Phi\)</span>) is a little funky
+between it is left as <em>NA</em> along the diagonal and lower triangle,
+but the upper triangle is left as 0. I figure this specification out
+through trial and error for being able to get the lower triangle
+duplicated more easily while still keeping the number of unique elements
+in this matrix to be estimated correct. Note however, that in the
+<em>cfa.fit</em> function I turn the <span class="math inline">\(\Phi\)</span> matrix into the full appropriate
+matrix with the upper and lower diagonal being equal.</p>
+<pre class="r"><code>nF&lt;-3 # number of factor
+p&lt;-ncol(X) # number of variables
+
+# model specification for factor loading matrix
+#   Note: matrix fills column wise
+lambdaMod &lt;- matrix(ncol=nF, nrow=p,
+                    # x1,x2, x3, x4,x5, x6, x7,x8,x9
+                    c(1, NA, NA, 0,  0,  0, 0,  0, 0,   #f1
+                      0,  0,  0, 1, NA, NA, 0,  0, 0,   #f2
+                      0,  0,  0, 0,  0,  0, 1, NA, NA)) #f3
+lambdaMod</code></pre>
+<pre><code>##       [,1] [,2] [,3]
+##  [1,]    1    0    0
+##  [2,]   NA    0    0
+##  [3,]   NA    0    0
+##  [4,]    0    1    0
+##  [5,]    0   NA    0
+##  [6,]    0   NA    0
+##  [7,]    0    0    1
+##  [8,]    0    0   NA
+##  [9,]    0    0   NA</code></pre>
+<pre class="r"><code># factor covariance matrix (lower diagonal + diagonal)
+phiMod &lt;- matrix(nrow=nF,ncol=nF)
+phiMod[upper.tri(phiMod)] &lt;- 0
+phiMod</code></pre>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]   NA    0    0
+## [2,]   NA   NA    0
+## [3,]   NA   NA   NA</code></pre>
+<pre class="r"><code># error variances
+psiMod &lt;- diag(nrow=p)
+diag(psiMod)&lt;-NA
+psiMod</code></pre>
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9]
+##  [1,]   NA    0    0    0    0    0    0    0    0
+##  [2,]    0   NA    0    0    0    0    0    0    0
+##  [3,]    0    0   NA    0    0    0    0    0    0
+##  [4,]    0    0    0   NA    0    0    0    0    0
+##  [5,]    0    0    0    0   NA    0    0    0    0
+##  [6,]    0    0    0    0    0   NA    0    0    0
+##  [7,]    0    0    0    0    0    0   NA    0    0
+##  [8,]    0    0    0    0    0    0    0   NA    0
+##  [9,]    0    0    0    0    0    0    0    0   NA</code></pre>
+<pre class="r"><code># store as list
+cfaModel &lt;- list(lambdaMod, phiMod, psiMod)</code></pre>
+</div>
+<div id="optimization-function-and-starting-value-set-up" class="section level2">
+<h2>3. Optimization Function and Starting Value Set-Up</h2>
+<p>The starting values were also a little tricky to get figured out a
+first…</p>
+<pre class="r"><code># get length of each model element
+lam.num &lt;- sum(is.na(c(lambdaMod))==T)
+phi.num &lt;- sum(is.na(c(phiMod))==T)
+psi.num &lt;- sum(is.na(c(psiMod))==T)
+
+k&lt;-lam.num+phi.num+psi.num
+sv&lt;-numeric(k)
+# generate starting values
+sv[1:(lam.num)] &lt;- rep(0.25,lam.num)
+sv[(lam.num+1):(lam.num+phi.num)]&lt;- runif(phi.num, 0.05, 1)
+sv[(lam.num+phi.num+1):(lam.num+phi.num+psi.num)] &lt;-runif(psi.num, 0.05, 3)</code></pre>
+<p>Last thing with respect to the estimation. We have to the compute the
+trace of a matrix. For some reason, I can not find a built in R function
+that automatically does this… So, I initialized a little function that
+does it for me to keep track.</p>
+<pre class="r"><code># trace function
+trace &lt;- function(A) {
+  n &lt;- dim(A)[1] # get dimension of matrix
+  tr &lt;- 0 # initialize trace value
+  
+  # Loop over the diagonal elements of the supplied matrix and add the element to tr
+  for (k in 1:n) {
+    l &lt;- A[k,k]
+    tr &lt;- tr + l
+  }
+  return(tr[[1]])
+}
+# or one could do sum(diag(A))</code></pre>
+</div>
+<div id="estimating-the-model" class="section level2">
+<h2>4. Estimating the Model</h2>
+<p>Lavaan estimates models using the fit function described briefly from
+above along with a numerical methods for optimization. Now, that is
+vague on purpose. The precise methods of numerical approximations for
+complex functions is a bit out of my range of knowledge at this point,
+but I have general enough sense of how to use the basics of these
+methods. MANY methods exists for numerically solving complex
+optimization tasks in high dimensions, I will use two separate R tools
+and show how vastly different the results can be.</p>
+<p>First, I will use the tools lavaan is built on. Lavaan uses the
+<em>nlminb</em>. I am unsure why this optimization function was selected
+(the answer may be hidden in the depths of the lavaan help/tutorial
+pages). But, the nice thing is that this function is pretty
+straightforward to use. The following chunk of code utilize the function
+in a similar manner that lavaan does I believe. The <em>control</em>
+argument supplies a list of different evaluation criteria, which I have
+taken from the fitted <em>fit.la</em> object from above. When I was
+testing this code out, I found that changing most of these settings had
+neglible impact on the results from this simple model.</p>
+<p>Secondly, I extracted the corresponding parameter estimated and
+unpacked them into the objects <em>lambda</em>, <em>phi</em>, and
+<em>psi</em>. This was so that I could show the resulting model
+pieces.</p>
+<pre class="r"><code>fit1 &lt;- nlminb(sv, cfa.fit, X=X, model=cfaModel,
+               control=list(eval.max=20000, iter.max=10000,
+                               abs.tol=2.2e-15, rel.tol=1e-10,
+                               x.tol=1.5e-8,xf.tol=2.2e-14))
+
+# value of the fit function
+fit1$objective</code></pre>
+<pre><code>## [1] 0.1417035</code></pre>
+<pre class="r"><code># unpack parameter estimates
+fit&lt;-fit1
+lambda &lt;- cfaModel[[1]]
+phi &lt;- cfaModel[[2]]
+psi &lt;- cfaModel[[3]]
+# number factor loadings
+lam.num &lt;- length(which(is.na(lambda)))
+lambda[which(is.na(lambda))] &lt;- fit$par[1:lam.num]
+# number elements in factor (co)variance matrix
+phi.num &lt;- length(which(is.na(phi)))
+if(phi.num &gt; 0){
+  phi[which(is.na(phi))] &lt;- fit$par[(lam.num+1):(lam.num+phi.num)]
+}
+# number elements in error (co)variance matrix
+psi.num &lt;- length(which(is.na(psi)))
+psi[which(is.na(psi))] &lt;- fit$par[(lam.num+phi.num+1):(lam.num+phi.num+psi.num)]
+
+print(round(lambda,3))</code></pre>
+<pre><code>##        [,1]  [,2]  [,3]
+##  [1,] 1.000 0.000 0.000
+##  [2,] 0.554 0.000 0.000
+##  [3,] 0.729 0.000 0.000
+##  [4,] 0.000 1.000 0.000
+##  [5,] 0.000 1.113 0.000
+##  [6,] 0.000 0.926 0.000
+##  [7,] 0.000 0.000 1.000
+##  [8,] 0.000 0.000 1.180
+##  [9,] 0.000 0.000 1.082</code></pre>
+<pre class="r"><code>print(round(phi,3))</code></pre>
+<pre><code>##       [,1]  [,2]  [,3]
+## [1,] 0.812 0.000 0.000
+## [2,] 0.410 0.983 0.000
+## [3,] 0.263 0.174 0.385</code></pre>
+<pre class="r"><code>print(round(diag(psi),3))</code></pre>
+<pre><code>## [1] 0.551 1.138 0.847 0.372 0.448 0.357 0.802 0.489 0.568</code></pre>
+<p>I also found an alternative optimization function in R called
+optim(.). The really nice part about this function is that the Hessian
+matrix can be more easily computed. But, the major downside is that
+optim was not used by lavaan can may yield slightly different results
+thatn lavaan. However, I think once the lower-bounds for parameters are
+placed the functions yeild identical results.</p>
+<pre class="r"><code>#using optim instead of nlminb
+# (easier to get hessian matrix)
+
+# BUT, I need to supply lower limits for the variance parameters
+lb &lt;- numeric(k)
+lb[1:(lam.num)] &lt;- -Inf
+# phi
+lb.phi&lt;- matrix(nrow=nF,ncol=nF)
+diag(lb.phi)&lt;- 0.001
+lb.phi[lower.tri(lb.phi)] &lt;- -Inf
+lb[(lam.num+1):(lam.num+phi.num)]&lt;- c(lb.phi[lower.tri(lb.phi, diag=T)])
+# phi
+lb[(lam.num+phi.num+1):(lam.num+phi.num+psi.num)] &lt;- 0.001
+
+fit2 &lt;- optim(sv, cfa.fit, X=X, model=cfaModel,
+              method=&#39;L-BFGS-B&#39;, hessian = T, lower=lb,
+              control=list(maxit=10000))
+
+# value of the fit function
+fit2$value</code></pre>
+<pre><code>## [1] 0.1417035</code></pre>
+<pre class="r"><code># unpack parameter estimates
+fit&lt;-fit2
+lambda &lt;- cfaModel[[1]]
+phi &lt;- cfaModel[[2]]
+psi &lt;- cfaModel[[3]]
+# number factor loadings
+lam.num &lt;- length(which(is.na(lambda)))
+lambda[which(is.na(lambda))] &lt;- fit$par[1:lam.num]
+# number elements in factor (co)variance matrix
+phi.num &lt;- length(which(is.na(phi)))
+if(phi.num &gt; 0){
+  phi[which(is.na(phi))] &lt;- fit$par[(lam.num+1):(lam.num+phi.num)]
+}
+# number elements in error (co)variance matrix
+psi.num &lt;- length(which(is.na(psi)))
+psi[which(is.na(psi))] &lt;- fit$par[(lam.num+phi.num+1):(lam.num+phi.num+psi.num)]
+
+print(lambda)</code></pre>
+<pre><code>##            [,1]      [,2]     [,3]
+##  [1,] 1.0000000 0.0000000 0.000000
+##  [2,] 0.5535270 0.0000000 0.000000
+##  [3,] 0.7293599 0.0000000 0.000000
+##  [4,] 0.0000000 1.0000000 0.000000
+##  [5,] 0.0000000 1.1130382 0.000000
+##  [6,] 0.0000000 0.9261204 0.000000
+##  [7,] 0.0000000 0.0000000 1.000000
+##  [8,] 0.0000000 0.0000000 1.179954
+##  [9,] 0.0000000 0.0000000 1.081630</code></pre>
+<pre class="r"><code>print(phi)</code></pre>
+<pre><code>##           [,1]      [,2]     [,3]
+## [1,] 0.8120324 0.0000000 0.000000
+## [2,] 0.4096243 0.9828315 0.000000
+## [3,] 0.2631030 0.1740852 0.384998</code></pre>
+<pre class="r"><code>print(diag(psi))</code></pre>
+<pre><code>## [1] 0.5508865 1.1375943 0.8471442 0.3723983 0.4477594 0.3573981 0.8020822
+## [8] 0.4893649 0.5679775</code></pre>
+<p>One thing that I know is lacking in this replication is the
+computation of the standard errors. Standard errors are a much more
+complicated computation. I know they are related to the 2nd derivative
+of the likelihood function. But I have not figured out how to set up
+this computation myself yet.</p>
+</div>
 </div>
 
 

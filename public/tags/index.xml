@@ -2,125 +2,125 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Padgett - MMSCALED</title>
-    <link>https://noah-padgett.github.io/padgett-website/tags/</link>
+    <link>https://noah-padgett.github.io/tags/</link>
     <description>Recent content in Tags on Padgett - MMSCALED</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 01 Aug 2021 21:29:20 +0200</lastBuildDate><atom:link href="https://noah-padgett.github.io/padgett-website/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 01 Aug 2021 21:29:20 +0200</lastBuildDate><atom:link href="https://noah-padgett.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>golang</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/golang/</link>
+      <link>https://noah-padgett.github.io/tags/golang/</link>
       <pubDate>Sun, 01 Aug 2021 21:29:20 +0200</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/golang/</guid>
+      <guid>https://noah-padgett.github.io/tags/golang/</guid>
       <description></description>
     </item>
     
     <item>
       <title>hugo</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/hugo/</link>
+      <link>https://noah-padgett.github.io/tags/hugo/</link>
       <pubDate>Sun, 01 Aug 2021 21:29:20 +0200</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/hugo/</guid>
+      <guid>https://noah-padgett.github.io/tags/hugo/</guid>
       <description></description>
     </item>
     
     <item>
       <title>programming</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/programming/</link>
+      <link>https://noah-padgett.github.io/tags/programming/</link>
       <pubDate>Sun, 01 Aug 2021 21:29:20 +0200</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/programming/</guid>
+      <guid>https://noah-padgett.github.io/tags/programming/</guid>
       <description></description>
     </item>
     
     <item>
       <title>theme</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/theme/</link>
+      <link>https://noah-padgett.github.io/tags/theme/</link>
       <pubDate>Sun, 01 Aug 2021 21:29:20 +0200</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/theme/</guid>
+      <guid>https://noah-padgett.github.io/tags/theme/</guid>
       <description></description>
     </item>
     
     <item>
       <title>plot</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/plot/</link>
+      <link>https://noah-padgett.github.io/tags/plot/</link>
       <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/plot/</guid>
+      <guid>https://noah-padgett.github.io/tags/plot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R Markdown</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/r-markdown/</link>
+      <link>https://noah-padgett.github.io/tags/r-markdown/</link>
       <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/r-markdown/</guid>
+      <guid>https://noah-padgett.github.io/tags/r-markdown/</guid>
       <description></description>
     </item>
     
     <item>
       <title>regression</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/regression/</link>
+      <link>https://noah-padgett.github.io/tags/regression/</link>
       <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/regression/</guid>
+      <guid>https://noah-padgett.github.io/tags/regression/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/r/</link>
+      <link>https://noah-padgett.github.io/tags/r/</link>
       <pubDate>Fri, 06 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/r/</guid>
+      <guid>https://noah-padgett.github.io/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Stan</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/stan/</link>
+      <link>https://noah-padgett.github.io/tags/stan/</link>
       <pubDate>Fri, 06 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/stan/</guid>
+      <guid>https://noah-padgett.github.io/tags/stan/</guid>
       <description></description>
     </item>
     
     <item>
       <title>trouble</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/trouble/</link>
+      <link>https://noah-padgett.github.io/tags/trouble/</link>
       <pubDate>Fri, 06 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/trouble/</guid>
+      <guid>https://noah-padgett.github.io/tags/trouble/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tutorial</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/tutorial/</link>
+      <link>https://noah-padgett.github.io/tags/tutorial/</link>
       <pubDate>Fri, 06 Sep 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/tutorial/</guid>
+      <guid>https://noah-padgett.github.io/tags/tutorial/</guid>
       <description></description>
     </item>
     
     <item>
       <title>simulation</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/simulation/</link>
+      <link>https://noah-padgett.github.io/tags/simulation/</link>
       <pubDate>Sun, 14 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/simulation/</guid>
+      <guid>https://noah-padgett.github.io/tags/simulation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>go</title>
-      <link>https://noah-padgett.github.io/padgett-website/tags/go/</link>
+      <link>https://noah-padgett.github.io/tags/go/</link>
       <pubDate>Thu, 17 Sep 2015 13:47:08 +0200</pubDate>
       
-      <guid>https://noah-padgett.github.io/padgett-website/tags/go/</guid>
+      <guid>https://noah-padgett.github.io/tags/go/</guid>
       <description></description>
     </item>
     
