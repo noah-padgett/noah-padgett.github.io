@@ -18,6 +18,8 @@ A major aim of my work is to be open about the tools and methods used.
 Below are websites I created to document the research process and provide a useful way to communicate research results in a non-linear way.
 This has helped organize the code and results of collaborations leading to easier discussion and porting to other means of communication.
 
+* [European Journal of Persoanlity Special Issue on Measurement](https://noah-padgett.github.io/EJP-Special-Issue/)
+
 * [Misclassification error in item-factor-analysis](https://noah-padgett.github.io/Padgett-Dissertation/)
 
 * [Multilevel CFA Fit Statistics](https://noah-padgett.github.io/mcfa-fit/)
